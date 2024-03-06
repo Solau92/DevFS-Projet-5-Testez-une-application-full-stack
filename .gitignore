@@ -4,6 +4,3 @@ back/src/test/java/com/openclassrooms/starterjwt/integrationtests/SessionControl
 back/src/test/java/com/openclassrooms/starterjwt/integrationtests/TeacherControllerIntegrationTest.java
 back/src/test/java/com/openclassrooms/starterjwt/integrationtests/testdata.sql
 back/src/test/java/com/openclassrooms/starterjwt/integrationtests/UserControllerIntegrationTest.java
-back/src/test/java/com/openclassrooms/starterjwt/unittests/controller/TeacherControllerTest.java
-back/src/test/java/com/openclassrooms/starterjwt/unittests/controller/SessionControllerTest.java
-back/src/test/java/com/openclassrooms/starterjwt/unittests/controller/UserControllerTest.java
