@@ -39,4 +39,9 @@ public abstract class SessionMapper implements EntityMapper<SessionDto, Session>
             @Mapping(target = "users", expression = "java(Optional.ofNullable(session.getUsers()).orElseGet(Collections::emptyList).stream().map(u -> u.getId()).collect(Collectors.toList()))"),
     })
     public abstract SessionDto toDto(Session session);
+
+
+        public SessionMapper() {
+        }
+
 }
