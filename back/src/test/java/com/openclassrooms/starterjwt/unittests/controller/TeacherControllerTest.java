@@ -1,4 +1,4 @@
-package com.openclassrooms.unittests.controller;
+package com.openclassrooms.starterjwt.unittests.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

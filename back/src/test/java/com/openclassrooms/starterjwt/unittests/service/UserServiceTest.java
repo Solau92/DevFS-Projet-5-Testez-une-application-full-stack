@@ -1,4 +1,4 @@
-package com.openclassrooms.unittests.service;
+package com.openclassrooms.starterjwt.unittests.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -84,10 +84,10 @@ class UserServiceTest {
 
         // GIVEN
         // WHEN
-        userRepository.delete(user1);
+        userService.delete(user1.getId());
 
         // THEN
-        verify(userRepository, Mockito.times(1)).delete(user1);
+        verify(userRepository, Mockito.times(1)).deleteById(user1.getId());
     }
 
     @Test

@@ -48,7 +48,7 @@ describe('LoginComponent', () => {
   });
 
   // Exemple test
-  
+
   it('should login success', () => {
 
     authService = TestBed.inject(AuthService);
@@ -68,7 +68,7 @@ describe('LoginComponent', () => {
   // if() {
     // Générer error (throw error dans mockImplementation)
   //}
-  }
+  //})
 
 
 });
