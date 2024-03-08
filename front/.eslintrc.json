@@ -12,6 +12,8 @@
         "project": [
           "tsconfig.json"
         ],
+        "tsconfigRootDir": "front/",
+        "sourceType": "module",
         "createDefaultProgram": true
       },
       "extends": [
