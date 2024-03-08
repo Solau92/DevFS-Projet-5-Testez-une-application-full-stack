@@ -68,7 +68,7 @@ describe('LoginComponent', () => {
   // if() {
     // Générer error (throw error dans mockImplementation)
   //}
-  }
+  //}
 
 
 });
