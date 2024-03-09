@@ -8,6 +8,7 @@ import { SessionService } from 'src/app/services/session.service';
 import { ListComponent } from './list.component';
 
 describe('ListComponent', () => {
+
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
 
@@ -33,4 +34,20 @@ describe('ListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get user', () => {
+
+    // TODO : voir comment on fait ? 
+
+    // let sessionService: SessionService;
+    // sessionService = TestBed.inject(SessionService);
+    //const sessionServiceMock = spyOn(sessionService, ".sessionInformation").mockImplementation();
+    //.replaceProperty ??
+
+    // component.user;
+
+    // expect(sessionServiceMock).toBeCalled();
+  });
+
+
 });

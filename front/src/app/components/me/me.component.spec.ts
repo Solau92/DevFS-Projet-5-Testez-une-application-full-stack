@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -45,13 +45,21 @@ describe('MeComponent', () => {
   });
 
   it('should create', () => {
-        // TODO : voir problème
+    // TODO : voir problème
     expect(component).toBeTruthy();
   });
 
+  // TODO : voir si on teste ngOnInit ? 
+
   it('should init', () => {
 
-        // TODO 
+    // TODO : marche pas ? parce que propriété private dans le constructeur ? 
+    // userService = TestBed.inject(UserService);
+    // const userServiceMock = jest.spyOn(userService, "getById").mockImplementation();
+
+    // component.ngOnInit();
+
+    // expect(userServiceMock).toHaveBeenCalled();
 
   });
 
@@ -68,7 +76,7 @@ describe('MeComponent', () => {
 
   it('should delete', () => {
 
-        // TODO 
+    // TODO 
 
     // userService = TestBed.inject(UserService);
     // const userServiceMock = jest.spyOn(userService, "delete").mockImplementation();
