@@ -8,10 +8,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SessionService } from 'src/app/services/session.service';
 
 import { MeComponent } from './me.component';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 describe('MeComponent', () => {
+
   let component: MeComponent;
   let fixture: ComponentFixture<MeComponent>;
+  let router: Router;
+  let userService: UserService;
 
   const mockSessionService = {
     sessionInformation: {
@@ -30,7 +35,7 @@ describe('MeComponent', () => {
         MatIconModule,
         MatInputModule
       ],
-      providers: [{ provide: SessionService, useValue: mockSessionService }],
+      providers: [{ provide: SessionService, useValue: mockSessionService }, UserService],
     })
       .compileComponents();
 
@@ -40,6 +45,43 @@ describe('MeComponent', () => {
   });
 
   it('should create', () => {
+        // TODO : voir problème
     expect(component).toBeTruthy();
   });
+
+  it('should init', () => {
+
+        // TODO 
+
+  });
+
+
+  it('should go back', () => {
+
+    // TODO 
+
+    // component.back();
+
+    // expect(window.history.back()).toHaveBeenCalled();
+
+  });
+
+  it('should delete', () => {
+
+        // TODO 
+
+    // userService = TestBed.inject(UserService);
+    // const userServiceMock = jest.spyOn(userService, "delete").mockImplementation();
+    // router = TestBed.inject(Router);
+    // const routerMock = jest.spyOn(router, "navigate").mockImplementation(async ()=> true);
+
+    // component.delete();
+
+    // expect(userServiceMock).toHaveBeenCalled();
+    // expect(mockSessionService).toHaveBeenCalled()
+    // expect(routerMock).toHaveBeenCalledWith(['/']);
+
+  });
+
+
 });

@@ -17,6 +17,7 @@ import { SessionInformation } from 'src/app/interfaces/sessionInformation.interf
 import { Router } from '@angular/router';
 
 describe('LoginComponent', () => {
+  
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;

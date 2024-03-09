@@ -2,8 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { expect } from '@jest/globals';
 
 import { SessionService } from './session.service';
-
-// Ajouté
 import { SessionInformation } from '../interfaces/sessionInformation.interface';
 import { Observable } from 'rxjs';
 
