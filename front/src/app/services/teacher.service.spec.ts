@@ -46,30 +46,22 @@ describe('TeacherService', () => {
 
   it('should return all teachers', () => {
 
-    // TODO : vérifier que OK 
-    // Créer un Teacher[], puis un Observable<Teacher[]>
     const teachersAsObservable: Observable<Teacher[]> = new BehaviorSubject<Teacher[]>(teachers);
 
-    // dire que this.httpClient.get<Teacher[]>(`nptquelchemin`) doit renvoyer monObservable<Teacher[]>
     httpClient = TestBed.inject(HttpClient);
     const httpClientMock = jest.spyOn(httpClient, "get").mockImplementation(() => teachersAsObservable);
 
-    // tester qu'on obtient bien mon Teacher[] quand on exécute service.all()
     expect(service.all()).toBe(teachersAsObservable);
 
   });
 
   it('should return details of a teacher given its id', () => {
 
-    // TODO : vérifier que OK
-    // Créer un Teacher, puis un Observable<Teacher>
     const teacher1AsObservable: Observable<Teacher> = new BehaviorSubject<Teacher>(teacher1);
 
-    // dire que this.httpClient.get<Teacher>(`nptquelchemin`) doit renvoyer monObservable<Teacher>
     httpClient = TestBed.inject(HttpClient);
     const httpClientMock = jest.spyOn(httpClient, "get").mockImplementation(() => teacher1AsObservable);
 
-    // tester qu'on obtient bien monTeacher quand on exécute service.detail()
     expect(service.detail("2")).toBe(teacher1AsObservable);
 
   });

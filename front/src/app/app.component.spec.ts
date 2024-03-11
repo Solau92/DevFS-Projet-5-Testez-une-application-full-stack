@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { expect } from '@jest/globals';
@@ -13,9 +13,7 @@ describe('AppComponent', () => {
 
   let sessionService: SessionService;
   let router: Router;
-
-  let component: AppComponent; // ajouté
-
+  let component: AppComponent; 
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,8 +28,8 @@ describe('AppComponent', () => {
 
     }).compileComponents();
 
-    const fixture = TestBed.createComponent(AppComponent); // ajouté 
-    component = fixture.componentInstance; // ajouté 
+    const fixture = TestBed.createComponent(AppComponent); 
+    component = fixture.componentInstance; 
 
   });
 
@@ -44,37 +42,28 @@ describe('AppComponent', () => {
 
   it('should return true as the user is logged', () => {
 
-    // TODO : vérifier que OK
-    // Je mocke mon session service
     sessionService = TestBed.inject(SessionService);
 
-    // Je dis qu'il doit renvoyer true
     const expectedResponse: Observable<boolean> = new BehaviorSubject(true);
     const sessionServiceMock = jest.spyOn(sessionService, "$isLogged").mockImplementation(() => expectedResponse);
 
-    // Je vérifie 
     expect(component.$isLogged()).toBeTruthy;
 
   });
 
   it('should return false as the user is not logged', () => {
 
-    // TODO : vérifier que OK
-    // Je mocke mon session service
     sessionService = TestBed.inject(SessionService);
 
-    // Je dis qu'il doit renvoyer false
     const expectedResponse: Observable<boolean> = new BehaviorSubject(false);
     const sessionServiceMock = jest.spyOn(sessionService, "$isLogged").mockImplementation(() => expectedResponse);
 
-    // Je vérifie 
     expect(component.$isLogged()).toBeFalsy;
 
   });
 
   it('should log out', () => {
 
-    // TODO : vérifier que OK
     sessionService = TestBed.inject(SessionService);
     const sessionServiceMock = jest.spyOn(sessionService, "logOut").mockImplementation();
 

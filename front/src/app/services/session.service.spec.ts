@@ -34,8 +34,6 @@ describe('SessionService', () => {
     expect(service.sessionInformation).toBeUndefined;
     expect(service.isLogged).toBeTruthy;
 
-    //TODO : voir si on peut tester, car méthode privée
-    // expect(service.next()).toHaveBeenCalled();
   });
 
   it('should log out', () => {
@@ -45,8 +43,6 @@ describe('SessionService', () => {
     expect(service.sessionInformation).toBe(undefined);
     expect(service.isLogged).toBeFalsy;
 
-    //TODO : voir si on peut tester, car méthode privée
-    // expect(service.next()).toHaveBeenCalled();
   });
 
   it('should return true as the user is logged', () => {

@@ -36,22 +36,16 @@ describe('UserService', () => {
 
   it('should return a user given its id', () => {
 
-    // TODO : vérifier que OK
-    // Créer un Observable<User]>
     const user1AsObservable: Observable<User> = new BehaviorSubject<User>(user1);
 
-    // dire que this.httpClient.get<User>(`nptquelchemin`) doit renvoyer user1AsObservable
     httpClient = TestBed.inject(HttpClient);
     const httpClientMock = jest.spyOn(httpClient, "get").mockImplementation(() => user1AsObservable);
 
-    // tester qu'on obtient bien user1AsObservable quand on exécute service.getById
     expect(service.getById("1")).toBe(user1AsObservable);
 
   });
 
   it('should delete a user given its id', () => {
-
-    // TODO : vérifier que OK
 
     httpClient = TestBed.inject(HttpClient);
     const httpClientMock = jest.spyOn(httpClient, "delete");

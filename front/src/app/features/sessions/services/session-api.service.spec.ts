@@ -13,7 +13,6 @@ describe('SessionsService', () => {
 
   const pathService: string = 'api/session';
 
-  // TODO : voir si on met ici ou dans un setUp (mais marche pas dans le beforeEach) ?
   const session1: Session = {
     id: 1,
     name: 'session1',
@@ -52,7 +51,6 @@ describe('SessionsService', () => {
 
   it('should return all sessions', () => {
 
-    // TODO : vérifier que OK 
     const sessionsAsObservable: Observable<Session[]> = new BehaviorSubject<Session[]>(sessions);
 
     httpClient = TestBed.inject(HttpClient);
@@ -64,7 +62,6 @@ describe('SessionsService', () => {
 
   it('should return a session given its id', () => {
 
-    // TODO : vérifier que OK 
     const session1AsObservable: Observable<Session> = new BehaviorSubject<Session>(session1);
 
     httpClient = TestBed.inject(HttpClient);
@@ -76,7 +73,6 @@ describe('SessionsService', () => {
 
   it('should delete a session given its id', () => {
 
-    // TODO : vérifier que OK 
     httpClient = TestBed.inject(HttpClient);
     const httpClientMock = jest.spyOn(httpClient, "delete");
 
@@ -90,7 +86,6 @@ describe('SessionsService', () => {
 
   it('should create the given session', () => {
 
-    // TODO : vérifier que OK 
     const session2AsObservable: Observable<Session> = new BehaviorSubject<Session>(session2);
 
     httpClient = TestBed.inject(HttpClient);
@@ -103,7 +98,6 @@ describe('SessionsService', () => {
 
   it('should update the given session', () => {
 
-    // TODO : vérifier que OK 
     const session2AsObservable: Observable<Session> = new BehaviorSubject<Session>(session2);
 
     httpClient = TestBed.inject(HttpClient);
