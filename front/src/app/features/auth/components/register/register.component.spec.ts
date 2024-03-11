@@ -11,7 +11,7 @@ import { expect } from '@jest/globals';
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../../services/auth.service';
 import { RegisterRequest } from '../../interfaces/registerRequest.interface';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 describe('RegisterComponent', () => {
@@ -58,13 +58,19 @@ describe('RegisterComponent', () => {
     component.submit();
 
     expect(authServiceMock).toHaveBeenCalled();
-    // expect(routerMock).toHaveBeenCalledWith(['/login']);
+    //expect(routerMock).toHaveBeenCalledWith(['/login']);
+
   });
 
   it('should return error when trying to register', () => {
     
-    // TODO 
-    
-  });
+      authService = TestBed.inject(AuthService);
+      const authServiceMock = jest.spyOn(authService, "register").mockImplementation(throwError);
+      
+      component.submit();
+  
+      expect(component.onError).toBeTruthy;
+  
+    });
 
 });

@@ -1,7 +1,3 @@
-back/src/test/java/com/openclassrooms/unittests/controller/AuthControllerTest.java
-back/src/test/java/com/openclassrooms/unittests/controller/SessionControllerTest.java
-back/src/test/java/com/openclassrooms/unittests/controller/TeacherControllerTest.java
-back/src/test/java/com/openclassrooms/unittests/controller/UserControllerTest.java
-back/src/test/java/com/openclassrooms/unittests/service/SessionServiceTest.java
-back/src/test/java/com/openclassrooms/unittests/service/TeacherServiceTest.java
-back/src/test/java/com/openclassrooms/unittests/service/UserServiceTest.java
+front/cypress/e2e/login.cy.ts
+front/cypress/e2e/register.cy.ts
+front/src/app/features/auth/components/login/login.component.it.sepc.ts
