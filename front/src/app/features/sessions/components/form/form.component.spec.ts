@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { expect } from '@jest/globals';
@@ -15,13 +15,15 @@ import { SessionApiService } from '../../services/session-api.service';
 
 import { FormComponent } from './form.component';
 import { Session } from '../../interfaces/session.interface';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 
 describe('FormComponent', () => {
 
   let component: FormComponent;
   let fixture: ComponentFixture<FormComponent>;
   let sessionApiService: SessionApiService;
+  let router: Router;
 
   const mockSessionService = {
     sessionInformation: {
@@ -57,50 +59,61 @@ describe('FormComponent', () => {
     fixture.detectChanges();
   });
 
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO : voir si on teste constructeur et ngOnInit ? 
-
   it('should init component, user is not admin', () => {
 
-    // TODO : voir comment tester !this.sessionService.sessionInformation!.admin
-    // car attribut privé...
-  
+    // TODO : à faire 
+
+    // router = TestBed.inject(Router);
+    // const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
+
+    // component.ngOnInit();
+
+    // expect(routerMock).toHaveBeenLastCalledWith(['/sessions']);
+
   });
 
   it('should init component, user is admin', () => {
 
-    // TODO : voir comment on teste (cf ci-dessus le 1er if)
-    // + le 2ème if(router est privé aussi)
+    router = TestBed.inject(Router);
+    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
 
-    // sessionApiService = TestBed.inject(SessionApiService);
-    // const sessionApiServiceMock = jest.spyOn(sessionApiService, "detail").mockImplementation(() => new Observable<Session>());
+    component.ngOnInit();
 
-    // component.ngOnInit();
-
-    // expect(sessionApiServiceMock).toHaveBeenCalled();
+    expect(routerMock).not.toHaveBeenLastCalledWith(['/sessions']);
   });
 
 
   it('should submit session form for creating a session', () => {
 
-    // TODO : voir si OK + compléter pour tester le .subscribe
+    // TODO : voir pourquoi .subscribe fonctionne pas 
     component.onUpdate = false;
 
     sessionApiService = TestBed.inject(SessionApiService);
-    const sessionApiServiceMock = jest.spyOn(sessionApiService, "create").mockImplementation(() => new Observable<Session>());
+    // const sessionApiServiceMock = jest.spyOn(sessionApiService, "create").mockImplementation(() => new Observable<Session>());
+    const sessionApiServiceMock = jest.spyOn(sessionApiService, "create").mockImplementation(() => of());
+
+    // router = TestBed.inject(Router);
+    // const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
+
+    // let matSnackBar = TestBed.inject(MatSnackBar);
+    // const matSnackBarMock = jest.spyOn(matSnackBar, "open").mockImplementation();
 
     component.submit();
 
     expect(sessionApiServiceMock).toHaveBeenCalled();
+    // expect(matSnackBarMock).toHaveBeenCalled();
+    // expect(routerMock).toHaveBeenCalledWith(['sessions']);
 
   });
 
   it('should submit session form for updating a session', () => {
 
-    // TODO : voir si OK + compléter pour tester le .subscribe
+    // TODO : voir compléter quand test précédent fait, pour faire fonctionner .subscribe
     component.onUpdate = true;
 
     sessionApiService = TestBed.inject(SessionApiService);
@@ -111,12 +124,5 @@ describe('FormComponent', () => {
     expect(sessionApiServiceMock).toHaveBeenCalled();
 
   });
-
-  // it('should init session form', () => {
-
-
-  // });
-
-  // TODO : voir comment tester parties private ??
 
 });

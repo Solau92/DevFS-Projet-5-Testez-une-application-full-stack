@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,8 +10,7 @@ import { expect } from '@jest/globals';
 
 import { RegisterComponent } from './register.component';
 import { AuthService } from '../../services/auth.service';
-import { RegisterRequest } from '../../interfaces/registerRequest.interface';
-import { Observable, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 describe('RegisterComponent', () => {
@@ -47,10 +46,8 @@ describe('RegisterComponent', () => {
 
   it('should register with success', () => {
     
-    // TODO : vérifier que ok 
-
     authService = TestBed.inject(AuthService);
-    const authServiceMock = jest.spyOn(authService, "register").mockImplementation(() => new Observable<void>());
+    const authServiceMock = jest.spyOn(authService, "register").mockImplementation(() => of(undefined));
 
     router = TestBed.inject(Router);
     const routerMock = jest.spyOn(router, "navigate").mockImplementation(async ()=> true);
@@ -58,7 +55,7 @@ describe('RegisterComponent', () => {
     component.submit();
 
     expect(authServiceMock).toHaveBeenCalled();
-    //expect(routerMock).toHaveBeenCalledWith(['/login']);
+    expect(routerMock).toHaveBeenCalledWith(['/login']);
 
   });
 

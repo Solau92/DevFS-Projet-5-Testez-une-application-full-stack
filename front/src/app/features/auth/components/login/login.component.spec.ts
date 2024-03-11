@@ -47,8 +47,6 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // Exemple test
   
   it('should login success', () => {
 

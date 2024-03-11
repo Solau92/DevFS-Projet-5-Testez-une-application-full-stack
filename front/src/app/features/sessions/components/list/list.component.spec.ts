@@ -37,17 +37,8 @@ describe('ListComponent', () => {
 
   it('should get user', () => {
 
-    // TODO : voir comment on fait ? 
+    expect(component.user).toBe(mockSessionService.sessionInformation);
 
-    // let sessionService: SessionService;
-    // sessionService = TestBed.inject(SessionService);
-    //const sessionServiceMock = spyOn(sessionService, ".sessionInformation").mockImplementation();
-    //.replaceProperty ??
-
-    // component.user;
-
-    // expect(sessionServiceMock).toBeCalled();
   });
-
 
 });

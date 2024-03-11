@@ -4,12 +4,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { SessionService } from 'src/app/services/session.service';
 
 import { MeComponent } from './me.component';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { Observable, of } from 'rxjs';
+import { User } from 'src/app/interfaces/user.interface';
 
 describe('MeComponent', () => {
 
@@ -24,6 +26,7 @@ describe('MeComponent', () => {
       id: 1
     }
   }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [MeComponent],
@@ -49,17 +52,15 @@ describe('MeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // TODO : voir si on teste ngOnInit ? 
-
   it('should init', () => {
 
     // TODO : marche pas ? parce que propriété private dans le constructeur ? 
-    // userService = TestBed.inject(UserService);
-    // const userServiceMock = jest.spyOn(userService, "getById").mockImplementation();
+    userService = TestBed.inject(UserService);
+    const userServiceMock = jest.spyOn(userService, "getById").mockImplementation(() => new Observable<User>());
 
-    // component.ngOnInit();
+    component.ngOnInit();
 
-    // expect(userServiceMock).toHaveBeenCalled();
+    expect(userServiceMock).toHaveBeenCalled();
 
   });
 
@@ -76,17 +77,26 @@ describe('MeComponent', () => {
 
   it('should delete', () => {
 
-    // TODO 
+    // TODO : compléter si possible 
 
-    // userService = TestBed.inject(UserService);
-    // const userServiceMock = jest.spyOn(userService, "delete").mockImplementation();
-    // router = TestBed.inject(Router);
-    // const routerMock = jest.spyOn(router, "navigate").mockImplementation(async ()=> true);
+    userService = TestBed.inject(UserService);
+    const userServiceMock = jest.spyOn(userService, "delete").mockImplementation(() => of(undefined));
+    
+    let matSnackBar = TestBed.inject(MatSnackBar);
+    const matSnackBarMock = jest.spyOn(matSnackBar, "open").mockImplementation();
 
-    // component.delete();
+    // let sessionService = TestBed.inject(SessionService);
+    // const sessionServiceMock = jest.spyOn(sessionService, "logOut").mockImplementation;
+    
+    router = TestBed.inject(Router);
+    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async ()=> true);
 
-    // expect(userServiceMock).toHaveBeenCalled();
-    // expect(mockSessionService).toHaveBeenCalled()
+    component.delete();
+
+    expect(userServiceMock).toHaveBeenCalled();
+    expect(matSnackBarMock).toHaveBeenCalled();
+    // expect(sessionServiceMock).toHaveBeenCalled();
+    //expect(mockSessionService).toHaveBeenCalled()
     // expect(routerMock).toHaveBeenCalledWith(['/']);
 
   });
