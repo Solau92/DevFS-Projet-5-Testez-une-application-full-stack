@@ -12,11 +12,12 @@ import { SessionService } from 'src/app/services/session.service';
 import { AuthService } from '../../services/auth.service';
 
 import { LoginComponent } from './login.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { SessionInformation } from 'src/app/interfaces/sessionInformation.interface';
 import { Router } from '@angular/router';
 
 describe('LoginComponent', () => {
+  
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
@@ -47,8 +48,6 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Exemple test
-
   it('should login success', () => {
 
     authService = TestBed.inject(AuthService);
@@ -65,10 +64,16 @@ describe('LoginComponent', () => {
 
   });
 
-  // if() {
-    // Générer error (throw error dans mockImplementation)
-  //}
-  //})
 
+  it('should login with error', () => {
+
+    authService = TestBed.inject(AuthService);
+    const authServiceMock = jest.spyOn(authService, "login").mockImplementation(throwError);
+    
+    component.submit();
+
+    expect(component.onError).toBeTruthy;
+
+  });
 
 });

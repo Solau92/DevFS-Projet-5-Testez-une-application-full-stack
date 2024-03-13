@@ -8,6 +8,7 @@ import { SessionService } from 'src/app/services/session.service';
 import { ListComponent } from './list.component';
 
 describe('ListComponent', () => {
+
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
 
@@ -33,4 +34,11 @@ describe('ListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should get user', () => {
+
+    expect(component.user).toBe(mockSessionService.sessionInformation);
+
+  });
+
 });
