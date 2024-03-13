@@ -1,4 +1,4 @@
-package com.openclassrooms.unittests.controller;
+package com.openclassrooms.starterjwt.unittests.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,11 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import com.openclassrooms.starterjwt.controllers.UserController;
 import com.openclassrooms.starterjwt.dto.UserDto;
 import com.openclassrooms.starterjwt.mapper.UserMapper;
 import com.openclassrooms.starterjwt.models.User;
+import com.openclassrooms.starterjwt.security.services.UserDetailsImpl;
 import com.openclassrooms.starterjwt.services.UserService;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,18 +37,16 @@ class UserControllerTest {
     @Mock
     UserMapper userMapper;
 
-    // TODO : nettoyer 
-    // @Mock
-    // SecurityContextHolder securityContextHolder;
-    // @Mock
-    // SecurityContext securityContext;
-    // @Mock
-    // Authentication authentication;
-    // @Mock
-    // UserDetails userDetails1;
+    @Mock
+    SecurityContextHolder securityContextHolder;
+    @Mock
+    SecurityContext securityContext;
+    @Mock
+    Authentication authentication;
 
     User user1;
     UserDto userDto1;
+    UserDetailsImpl userDetails1;
 
     @BeforeEach
     void setUp() {
@@ -69,6 +66,13 @@ class UserControllerTest {
                 user1.getPassword(),
                 LocalDateTime.now(),
                 LocalDateTime.now());
+
+        userDetails1 = new UserDetailsImpl(user1.getId(),
+                user1.getEmail(),
+                user1.getFirstName(),
+                user1.getLastName(),
+                user1.isAdmin(),
+                user1.getPassword());
 
     }
 
@@ -113,16 +117,16 @@ class UserControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
-    // TODO : faire marcher (pb : sécurité)
-    @Disabled
     @Test
     void savedelete_Ok_Test() {
 
         // GIVEN
+
         when(userService.findById(anyLong())).thenReturn(user1);
-        // Quid sécurité :
-        // UserDetails userDetails = (UserDetails)
-        // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        SecurityContextHolder.setContext(securityContext);
+        when(authentication.getPrincipal()).thenReturn(userDetails1);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
 
         // WHEN
         ResponseEntity<?> response = userController.save(String.valueOf(user1.getId()));
@@ -145,36 +149,40 @@ class UserControllerTest {
 
     }
 
-    // TODO : faire marcher (pb : sécurité)
-    @Disabled
     @Test
     void savedelete_Unauthorize_Test() {
 
         // GIVEN
-        when(userService.findById(anyLong())).thenReturn(user1);
-        // Quid sécurité :
-        // UserDetails userDetails = (UserDetails)
-        // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user2 = new User("user2@email.com",
+                "LASTNAME2",
+                "FirstName2",
+                "password",
+                false);
+        user2.setId(Long.valueOf(2));
+        when(userService.findById(anyLong())).thenReturn(user2);
+        
+        SecurityContextHolder.setContext(securityContext);
+        when(authentication.getPrincipal()).thenReturn(userDetails1);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
 
         // WHEN
         ResponseEntity<?> response = userController.save(String.valueOf(1));
 
         // THEN
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
-
     }
 
-    // TODO : faire marcher (pb : sécurité)
-    @Disabled
     @Test
     void save_NumberFormatException_Test() {
 
         // GIVEN
         when(userService.findById(anyLong())).thenReturn(user1);
         doThrow(NumberFormatException.class).when(userService).delete(anyLong());
-        // Quid sécurité :
-        // UserDetails userDetails = (UserDetails)
-        // SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
+        SecurityContextHolder.setContext(securityContext);
+        when(authentication.getPrincipal()).thenReturn(userDetails1);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
 
         // WHEN
         ResponseEntity<?> response = userController.save(String.valueOf(1));
@@ -182,11 +190,5 @@ class UserControllerTest {
         // THEN
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
-
-    // GIVEN
-
-    // WHEN
-
-    // THEN
 
 }

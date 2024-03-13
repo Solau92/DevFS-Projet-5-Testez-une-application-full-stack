@@ -47,7 +47,7 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
+
   it('should login success', () => {
 
     authService = TestBed.inject(AuthService);
@@ -63,6 +63,7 @@ describe('LoginComponent', () => {
     expect(routerMock).toHaveBeenCalledWith(['/sessions']);
 
   });
+
 
   it('should login with error', () => {
 

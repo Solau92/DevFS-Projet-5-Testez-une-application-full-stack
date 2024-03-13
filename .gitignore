@@ -1,24 +1,34 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-front/cypress/e2e/1-getting-started/todo.cy.js
-front/cypress/e2e/2-advanced-examples/actions.cy.js
-front/cypress/e2e/2-advanced-examples/aliasing.cy.js
-front/cypress/e2e/2-advanced-examples/assertions.cy.js
-front/cypress/e2e/2-advanced-examples/connectors.cy.js
-front/cypress/e2e/2-advanced-examples/cookies.cy.js
-front/cypress/e2e/2-advanced-examples/cypress_api.cy.js
-front/cypress/e2e/2-advanced-examples/files.cy.js
-front/cypress/e2e/2-advanced-examples/local_storage.cy.js
-front/cypress/e2e/2-advanced-examples/location.cy.js
-front/cypress/e2e/2-advanced-examples/misc.cy.js
-front/cypress/e2e/2-advanced-examples/navigation.cy.js
-front/cypress/e2e/2-advanced-examples/network_requests.cy.js
-front/cypress/e2e/2-advanced-examples/querying.cy.js
-front/cypress/e2e/2-advanced-examples/spies_stubs_clocks.cy.js
-front/cypress/e2e/2-advanced-examples/traversal.cy.js
-front/cypress/e2e/2-advanced-examples/utilities.cy.js
-front/cypress/e2e/2-advanced-examples/viewport.cy.js
-front/cypress/e2e/2-advanced-examples/waiting.cy.js
-front/cypress/e2e/2-advanced-examples/window.cy.js
-front/cypress/e2e/testIG.cy.ts
-front/cypress/e2e/register.cy.ts
-front/src/app/features/auth/components/login/login.component.it.sepc.ts
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+**/.DS_Store
+.DS_Store
+*.DS_Store
