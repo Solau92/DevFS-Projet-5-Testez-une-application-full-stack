@@ -25,27 +25,44 @@ describe('Login spec', () => {
     cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
 
     cy.url().should('include', '/sessions')
+
   });
 
-  // it('Login error', () => {
+  it('Login error : bad credentials', () => {
+
+    cy.visit('/login')
+
+    cy.intercept('POST', '/api/auth/login', {
+      statusCode: 401,
+      body: {
+        message: "Bad credentials"
+      },
+    })
+
+    cy.get('input[formControlName=email]').type("wrongEmail@studio.com")
+    cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
+
+    cy.url().should('include', '/login')
+    cy.get('.error').should('be.visible')
     
-  //   cy.visit('/login')
+  });
 
-  //   cy.intercept('POST', '/api/auth/login', {
-  //     body: {
-  //       id: 1,
-  //       username: 'userName',
-  //       firstName: 'firstName',
-  //       lastName: 'lastName',
-  //       admin: true
-  //     },
-  //   })
+  it('Login error : invalid form', () => {
 
-  //   cy.get('input[formControlName=email]').clear()
-  //   cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
+    cy.visit('/login')
 
-  //   cy.url().should('include', '/login')
-  //     // TODO : voir ce que je peux tester d'autre ? 
-  // });
+    cy.intercept('POST', '/api/auth/login', {
+      statusCode: 400,
+      body: {
+      },
+    })
+
+    cy.get('input[formControlName=email]').clear()
+    cy.get('input[formControlName=password]').clear()
+
+    cy.url().should('include', '/login')
+    cy.get('button[type="submit"]').should('be.disabled')
+
+  });
 
 });
