@@ -1,4 +1,4 @@
-describe('Login spec', () => {
+describe('Login and log out tests', () => {
 
   it('Login successfull', () => {
 
@@ -62,6 +62,38 @@ describe('Login spec', () => {
 
     cy.url().should('include', '/login')
     cy.get('button[type="submit"]').should('be.disabled')
+
+  });
+
+  it('Login and logout successfully', () => {
+
+    cy.visit('/login')
+
+    cy.intercept('POST', '/api/auth/login', {
+      body: {
+        id: 1,
+        username: 'userName',
+        firstName: 'firstName',
+        lastName: 'lastName',
+        admin: true
+      },
+    })
+
+    cy.intercept(
+      {
+        method: 'GET',
+        url: '/api/session',
+      },
+      []).as('session')
+
+    cy.get('input[formControlName=email]').type("yoga@studio.com")
+    cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
+
+    cy.url().should('include', '/sessions')
+
+    cy.contains('Logout').click();
+
+    cy.url().should('eq', 'http://localhost:4200/');
 
   });
 
