@@ -38,3 +38,4 @@ front/cypress/screenshots/detail.cy.ts/Detail tests -- should display the detail
 front/cypress/screenshots/detail.cy.ts/Detail tests -- should display the details of a session for user (failed).png
 front/cypress/screenshots/form.cy.ts/List tests -- should update a session (admin) (failed).png
 front/cypress/e2e/test.spec.cy.ts
+

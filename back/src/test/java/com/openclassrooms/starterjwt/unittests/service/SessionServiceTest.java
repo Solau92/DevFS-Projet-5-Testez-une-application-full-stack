@@ -1,4 +1,4 @@
-package com.openclassrooms.unittests.service;
+package com.openclassrooms.starterjwt.unittests.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -276,6 +276,18 @@ class SessionServiceTest {
         // WHEN
         // THEN
         assertThrows(NotFoundException.class, () -> sessionService.participate(Long.valueOf(10), Long.valueOf(1)));
+    }
+
+    @Test
+    void participate_UserAndSessionNotFound_Test() {
+
+        // GIVEN
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(sessionRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        // WHEN
+        // THEN
+        assertThrows(NotFoundException.class, () -> sessionService.participate(Long.valueOf(10), Long.valueOf(10)));
     }
 
     @Test
