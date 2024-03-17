@@ -17,7 +17,7 @@ import net.minidev.json.JSONObject;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-@Sql("testdata.sql")
+@Sql(scripts={"classpath:testdata.sql"})
 class AuthControllerIntegrationTest {
 
     @Autowired

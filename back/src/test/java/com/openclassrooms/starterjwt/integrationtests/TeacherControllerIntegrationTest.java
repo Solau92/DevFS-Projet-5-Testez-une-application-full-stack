@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
-@Sql("testdata.sql")
+@Sql(scripts={"classpath:testdata.sql"})
 class TeacherControllerIntegrationTest {
 
     @Autowired

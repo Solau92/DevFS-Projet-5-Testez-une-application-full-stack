@@ -111,6 +111,7 @@
 						<exclude>**/SpringBootSecurityJwtApplication.*</exclude>
 						<exclude>**/dto/*</exclude>
 						<exclude>**/models/*</exclude>
+						<exclude>**/security/jwt/*</exclude>
 						<exclude>**/payload/request/*</exclude>
 						<exclude>**/payload/response/*</exclude>
 						<exclude>**/exception/*</exclude>

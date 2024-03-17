@@ -19,7 +19,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-@Sql("testdata.sql")
+@Sql(scripts={"classpath:testdata.sql"})
 class UserControllerIntegrationTest {
 
     @Autowired

@@ -64,7 +64,7 @@ To test the app, go to the folder that contains the pom.xml file and execute the
 The reports are available in the folder : *./back/target/site/jacoco* (open *index.html* file).
 
 **!! Warning !!**
-When you run the tests, a database named "testfs" is created. 
+When you run the tests, a database named "itestfs" is created. 
 **But if it already exists it is beforehand dropped.**
 
 
