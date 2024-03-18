@@ -54,7 +54,6 @@ describe('MeComponent', () => {
 
   it('should init', () => {
 
-    // TODO : marche pas ? parce que propriété private dans le constructeur ? 
     userService = TestBed.inject(UserService);
     const userServiceMock = jest.spyOn(userService, "getById").mockImplementation(() => new Observable<User>());
 

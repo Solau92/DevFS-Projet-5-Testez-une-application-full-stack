@@ -18,7 +18,6 @@ public class UserController {
     private final UserMapper userMapper;
     private final UserService userService;
 
-
     public UserController(UserService userService,
                              UserMapper userMapper) {
         this.userMapper = userMapper;

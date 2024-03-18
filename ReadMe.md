@@ -52,7 +52,8 @@ Post installation of MySQL, Java and Maven, you will have to create the database
 The default name of the database is "testfs", but if you want to change it, modify the *application.properties* file (in the *./back/src/main/resources* folder) and replace "testfs" in the property "spring.datasource.url" by the name you choose for your database.
 
 Then set up the tables and data in the database. </br>
-For this, for demonstration purpose, please run the sql commands present in the *script.sql* file under the *./resources/sql* folder in the code base.
+For this, for demonstration purpose, please run the sql commands present in the *data.sql* file under the *./back/src/main/resources* folder in the code base.
+If you changed the name of the database, change it in this file too.
 
 To run the app, go to the folder that contains the pom.xml file (*./back*) and execute the following command in which you have to replace "*%username%*" by your username and "%*password*%" by your password required to access your database : 
  `mvn spring-boot:run "-Dspring-boot.run.arguments=--spring.datasource.username=%username% --spring.datasource.password=%password%"`
@@ -63,9 +64,9 @@ To test the app, go to the folder that contains the pom.xml file and execute the
 
 The reports are available in the folder : *./back/target/site/jacoco* (open *index.html* file).
 
-**!! Warning !!**
-When you run the tests, a database named "itestfs" is created. 
-**But if it already exists it is beforehand dropped.**
+   **!! Warning !!**
+   When you run the tests, a database named "itestfs" is created. 
+   **But if it already exists it is beforehand dropped.**
 
 
 ## **Front part of the app**
