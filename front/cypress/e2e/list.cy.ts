@@ -72,7 +72,7 @@ describe('List tests', () => {
             },
         })
 
-        // Affichage des sessions 
+        // Display of sessions 
 
         const sessions = [{
             id: 1,
