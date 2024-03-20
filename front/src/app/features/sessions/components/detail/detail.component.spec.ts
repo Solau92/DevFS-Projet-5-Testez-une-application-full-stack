@@ -11,6 +11,8 @@ import { SessionApiService } from '../../services/session-api.service';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Session } from '../../interfaces/session.interface';
+import { Teacher } from 'src/app/interfaces/teacher.interface';
+import { TeacherService } from 'src/app/services/teacher.service';
 
 
 describe('DetailComponent', () => {
@@ -48,6 +50,16 @@ describe('DetailComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should go back', () => {
+
+    const windowMock = jest.spyOn(window.history, 'back');
+    
+    component.back();
+
+    expect(windowMock).toHaveBeenCalled();
+
   });
 
   it('should delete session', () => {
@@ -93,22 +105,35 @@ describe('DetailComponent', () => {
 
   it('should init and fetch session', () => {
 
-    // TODO : finir
-    
+    const session1: Session = {
+      id: 1,
+      name: 'session1',
+      description: 'session 1',
+      date: new Date(),
+      teacher_id: 1,
+      users: [1, 2]
+    }
+
+    const teacher1: Teacher = {
+      id: 1,
+      lastName: "teacherLastName1",
+      firstName: "teacherFirstName1",
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+
     sessionApiService = TestBed.inject(SessionApiService);
-    const sessionApiServiceMock = jest.spyOn(sessionApiService, "detail").mockImplementation(() => new Observable<Session>());
+    const sessionApiServiceMock = jest.spyOn(sessionApiService, "detail").mockReturnValue(of(session1));
 
-    // let teacher1: Teacher;
-    // let teacherService: TeacherService = TestBed.inject(TeacherService);
-    // const teacherServiceMock = jest.spyOn(teacherService, "detail").mockImplementation(() => of(teacher1));
-
-    // let session1: Session;
-    // component.session = session1;
+    let teacherService = TestBed.inject(TeacherService);
+    const teacherServiceMock = jest.spyOn(teacherService, "detail").mockReturnValue(of(teacher1));
 
     component.ngOnInit();
 
     expect(sessionApiServiceMock).toHaveBeenCalled();
-    // expect(teacherServiceMock).toHaveBeenCalled();
+    expect(teacherServiceMock).toHaveBeenCalled();
+    expect(component.session).toEqual(session1);
+    expect(component.teacher).toEqual(teacher1);
 
   })
 
