@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,6 +21,7 @@ describe('MeComponent', () => {
   let userService: UserService;
 
   const mockSessionService = {
+    logOut: jest.fn(),
     sessionInformation: {
       admin: true,
       id: 1
@@ -48,13 +49,21 @@ describe('MeComponent', () => {
   });
 
   it('should create', () => {
-    // TODO : voir problème
     expect(component).toBeTruthy();
+  });
+
+  it('should go back', () => {
+
+    const windowMock = jest.spyOn(window.history, 'back');
+
+    component.back();
+
+    expect(windowMock).toHaveBeenCalled();
+
   });
 
   it('should init', () => {
 
-    // TODO : marche pas ? parce que propriété private dans le constructeur ? 
     userService = TestBed.inject(UserService);
     const userServiceMock = jest.spyOn(userService, "getById").mockImplementation(() => new Observable<User>());
 
@@ -64,42 +73,27 @@ describe('MeComponent', () => {
 
   });
 
-
-  it('should go back', () => {
-
-    // TODO 
-
-    // component.back();
-
-    // expect(window.history.back()).toHaveBeenCalled();
-
-  });
-
   it('should delete', () => {
 
-    // TODO : compléter si possible 
-
     userService = TestBed.inject(UserService);
-    const userServiceMock = jest.spyOn(userService, "delete").mockImplementation(() => of(undefined));
-    
+    const userServiceMock = jest.spyOn(userService, "delete").mockReturnValue(of(undefined));
+
     let matSnackBar = TestBed.inject(MatSnackBar);
     const matSnackBarMock = jest.spyOn(matSnackBar, "open").mockImplementation();
 
-    // let sessionService = TestBed.inject(SessionService);
-    // const sessionServiceMock = jest.spyOn(sessionService, "logOut").mockImplementation;
-    
+    let sessionService = TestBed.inject(SessionService);
+    const sessionServiceMock = jest.spyOn(sessionService, "logOut").mockImplementation();
+
     router = TestBed.inject(Router);
-    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async ()=> true);
+    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
 
     component.delete();
 
-    expect(userServiceMock).toHaveBeenCalled();
-    expect(matSnackBarMock).toHaveBeenCalled();
-    // expect(sessionServiceMock).toHaveBeenCalled();
-    //expect(mockSessionService).toHaveBeenCalled()
-    // expect(routerMock).toHaveBeenCalledWith(['/']);
+    expect(userServiceMock).toHaveBeenCalledWith('1');
+    expect(matSnackBarMock).toHaveBeenCalledWith('Your account has been deleted !', 'Close', { duration: 3000 });
+    expect(sessionServiceMock).toHaveBeenCalled();
+    expect(routerMock).toHaveBeenCalledWith(['/']);
 
   });
-
 
 });

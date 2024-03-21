@@ -13,7 +13,7 @@ describe('AppComponent', () => {
 
   let sessionService: SessionService;
   let router: Router;
-  let component: AppComponent; 
+  let component: AppComponent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -28,9 +28,8 @@ describe('AppComponent', () => {
 
     }).compileComponents();
 
-    const fixture = TestBed.createComponent(AppComponent); 
-    component = fixture.componentInstance; 
-
+    const fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
   });
 
 
@@ -75,6 +74,6 @@ describe('AppComponent', () => {
     expect(sessionServiceMock).toHaveBeenCalled();
     expect(routerMock).toHaveBeenCalledWith(['']);
 
-  })
+  });
 
 });

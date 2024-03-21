@@ -93,15 +93,15 @@ class TeacherServiceTest {
     @Test
     void findAll_Ok_Test() {
 
-         // GIVEN
-         when(teacherRepository.findAll()).thenReturn(teachers);
+        // GIVEN
+        when(teacherRepository.findAll()).thenReturn(teachers);
 
-         // WHEN
-         List<Teacher> teachersFound = teacherService.findAll();
- 
-         // THEN
-         assertEquals(teachers.size(), teachersFound.size());
-         assertTrue(teachers.contains(teacher2));
+        // WHEN
+        List<Teacher> teachersFound = teacherService.findAll();
+
+        // THEN
+        assertEquals(teachers.size(), teachersFound.size());
+        assertTrue(teachers.contains(teacher2));
     }
 
 }

@@ -4,7 +4,7 @@ import { expect } from '@jest/globals';
 
 import { SessionApiService } from './session-api.service';
 import { Session } from '../interfaces/session.interface';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 describe('SessionsService', () => {
 

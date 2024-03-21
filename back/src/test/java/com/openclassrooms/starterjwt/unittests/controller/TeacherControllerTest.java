@@ -47,6 +47,8 @@ class TeacherControllerTest {
     @BeforeEach
     void setUp() {
 
+        // Teachers and list of teachers
+
         teacher1 = new Teacher(Long.valueOf(1),
                 "TEACHERLASTNAME1",
                 "teacherFirstName1",
@@ -60,6 +62,8 @@ class TeacherControllerTest {
         teachers = new ArrayList<>();
         teachers.add(teacher1);
         teachers.add(teacher2);
+
+        // TeachersDto and list of teachersDto
 
         teacherDto1 = new TeacherDto(Long.valueOf(1),
                 "TEACHERLASTNAME1",

@@ -1,7 +1,7 @@
 # **ReadMe** 
 
 
-# - **Yoga App** 
+#  -- **Yoga App** --  
 
 An app to book yoga sessions in Savasana studio.</br>
 The front part of the app uses Angular framework to run.
@@ -14,7 +14,7 @@ These instructions will get you a copy of the project up and running on your loc
 First, get [this repository](https://github.com/Solau92/DevFS-Projet-5-Testez-une-application-full-stack.git) and import the project on your computer. 
 
 
-## **Back part of the app**
+##  - **Back part of the app** - 
 
 ### **Prerequisites**
 
@@ -52,7 +52,8 @@ Post installation of MySQL, Java and Maven, you will have to create the database
 The default name of the database is "testfs", but if you want to change it, modify the *application.properties* file (in the *./back/src/main/resources* folder) and replace "testfs" in the property "spring.datasource.url" by the name you choose for your database.
 
 Then set up the tables and data in the database. </br>
-For this, for demonstration purpose, please run the sql commands present in the *script.sql* file under the *./resources/sql* folder in the code base.
+For this, for demonstration purpose, please run the sql commands present in the *data.sql* file under the *./back/src/main/resources* folder in the code base.
+If you changed the name of the database, change it in this file too.
 
 To run the app, go to the folder that contains the pom.xml file (*./back*) and execute the following command in which you have to replace "*%username%*" by your username and "%*password*%" by your password required to access your database : 
  `mvn spring-boot:run "-Dspring-boot.run.arguments=--spring.datasource.username=%username% --spring.datasource.password=%password%"`
@@ -63,12 +64,14 @@ To test the app, go to the folder that contains the pom.xml file and execute the
 
 The reports are available in the folder : *./back/target/site/jacoco* (open *index.html* file).
 
-**!! Warning !!**
-When you run the tests, a database named "testfs" is created. 
-**But if it already exists it is beforehand dropped.**
+You can also access a summary of the report in the folder : *./coverage-reports* (file *jacoco-report.html*).
+
+   **!! Warning !!** </br>
+   When you run the tests, a database named "itestfs" is created. </br>
+   **But if it already exists it is beforehand dropped.**
 
 
-## **Front part of the app**
+## - **Front part of the app** -
 
 ### Technology
 
@@ -92,25 +95,29 @@ Run the `npm run start` command.
 And navigate to http://localhost:4200. 
 
 NB : if you have run the *script.sql* file, you can use theses credentials to log in : 
-   . user : yoga@studio.com
-   . password : test!1234
+   * user : yoga@studio.com
+   * password : test!1234
 
 ### **Testing the app** 
 
-#### Unitary test
+#### Unitary / integration tests
 
-To launch all the unit tests, run the following command at the root of the front project : `npm run test`.
+To launch all the unit / integration tests, run the following command at the root of the front project : `npm run test`.
 
 The reports are available in the folder : *./front/coverage/jest/lcov-report*  (open *index.html* file).
 
-#### E2E
+You can also access a summary of the report in the folder : *./coverage-reports* (file *jest-report.html*).
 
-To launch all the unit tests, run the following command at the root of the front project : `npm run e2e`.
+#### E2E tests
 
-To generate the coverage report, run the commmand `npm run e2e:coverage`.
+To launch all the tests, run the following command at the root of the front project : `npm run e2e`.
+
+To generate the coverage report, run the commmand `npm run e2e:coverage`. </br>
 The reports are available in the folder : *./front/coverage/lcov-report* (open *index.html* file).
 
+You can also access a summary of the report in the folder : *./coverage-reports* (file *cypress-report.html*).
 
-## - **Version**
+
+## - **Version** -
 
 1.0.0

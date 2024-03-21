@@ -57,6 +57,8 @@ class SessionServiceTest {
     @BeforeEach
     void setUp() {
 
+        // Users and list of users
+
         user1 = new User("user1@email.com",
                 "LASTNAME1",
                 "FirstName1",
@@ -75,11 +77,15 @@ class SessionServiceTest {
         users.add(user1);
         users.add(user2);
 
+        // Teacher
+
         Teacher teacher1 = new Teacher(Long.valueOf(1),
                 "TEACHERLASTNAME1",
                 "teacherFirstName1",
                 LocalDateTime.now(), LocalDateTime.now());
 
+        // Sessions and list of sessions 
+        
         session1 = new Session(Long.valueOf(1),
                 "session1",
                 new Date(LocalDate.now().getYear(), LocalDate.now().getMonthValue(),

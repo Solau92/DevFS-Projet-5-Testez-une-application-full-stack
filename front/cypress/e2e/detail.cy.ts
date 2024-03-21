@@ -1,5 +1,3 @@
-// TODO : marche pas 
-
 describe('Detail tests', () => {
 
     it('should display the details of a session for user', () => {
@@ -18,12 +16,12 @@ describe('Detail tests', () => {
             },
         })
 
-        // Affichage des sessions 
+        // Display of sessions 
 
         const teacher1 = {
             id: 1,
             lastName: "teacher1LastName",
-            firstName: "teacher2FirstName",
+            firstName: "teacher1FirstName",
             createdAt: new Date(),
             updatedAt: new Date()
         }
@@ -50,37 +48,40 @@ describe('Detail tests', () => {
             updatedAt: "2024-03-15T08:23:02"
         }
 
-        const sessions = [{ session1 }, { session2 }]
+        const sessions = [session1, session2]
 
         cy.intercept('GET', '/api/session', {
             body: sessions
-        })
+        }).as("getsession")
 
         cy.get('input[formControlName=email]').type("user1@email.com")
         cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
 
-        // Affichage d'une session (click on "Detail")
+        // Display of the first session (click on "Detail")
 
-        cy.intercept('GET', 'api/session/detail/1', {
+        cy.intercept('GET', '/api/session/1', {
             body: session1
         })
 
-        cy.intercept('GET', '/api/session/1', session1)
-        cy.intercept('GET', '/api/teacher/1', teacher1)
-
+        cy.intercept('GET', '/api/teacher/1', {
+            body: teacher1
+        })
+    
         cy.contains('Detail').click()
 
         // Verify 
-        // Display + delete is notpossible + participate / not is possible
 
-        cy.url().should('include', 'sessions/detail')
+        cy.url().should('include', 'sessions/detail/1')
         cy.contains('attendees')
-        cy.contains('session1')
-        cy.get('button').should('be.visible')
+        cy.contains('Session1')
+        cy.contains('Delete').should('not.exist')
+        cy.contains('Participate').should('be.visible')
 
     });
 
     it('should display the details of a session for admin', () => {
+
+        // Admin login
 
         cy.visit('/login')
 
@@ -94,7 +95,7 @@ describe('Detail tests', () => {
             },
         })
 
-        // Affichage des sessions 
+        // Display of sessions 
 
         const teacher1 = {
             id: 1,
@@ -126,7 +127,7 @@ describe('Detail tests', () => {
             updatedAt: "2024-03-15T08:23:02"
         }
 
-        const sessions = [{ session1 }, { session2 }]
+        const sessions = [session1, session2]
 
         cy.intercept('GET', '/api/session', {
             body: sessions
@@ -147,14 +148,14 @@ describe('Detail tests', () => {
         cy.contains('Detail').click()
 
         // Verify 
-        // Display + delete is possible + participate / not impossible
+
         cy.url().should('include', 'sessions/detail')
         cy.contains('attendees')
-        cy.contains('session1')
-        cy.get('button').should('be.visible')
+        cy.contains('Session1')
+        cy.contains('Delete').should('be.visible')
+        cy.contains('Participate').should('not.exist')
+        cy.contains('Do not participate').should('not.exist')
 
     });
-
-
 
 });

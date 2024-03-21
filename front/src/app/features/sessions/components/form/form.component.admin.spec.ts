@@ -15,20 +15,44 @@ import { SessionApiService } from '../../services/session-api.service';
 
 import { FormComponent } from './form.component';
 import { Session } from '../../interfaces/session.interface';
-import { Observable, of } from 'rxjs';
-import { Router } from '@angular/router';
+import { of } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
-describe('FormComponent', () => {
+describe('FormComponent user is admin', () => {
 
   let component: FormComponent;
   let fixture: ComponentFixture<FormComponent>;
   let sessionApiService: SessionApiService;
   let router: Router;
+  let matSnackBar: MatSnackBar;
 
   const mockSessionService = {
     sessionInformation: {
       admin: true
     }
+  }
+
+  const mockActivatedRoute = {
+    snapshot: {
+      paramMap: {
+        get: () => '1'
+      },
+      url: 'url/update'
+    }
+  };
+
+  const routerMock = {
+    navigate: jest.fn(),
+    url: 'url/update'
+  };
+
+  const session1: Session = {
+    id: 1,
+    name: 'session1',
+    description: 'session 1',
+    date: new Date(),
+    teacher_id: 1,
+    users: [1, 2]
   }
 
   beforeEach(async () => {
@@ -48,6 +72,8 @@ describe('FormComponent', () => {
       ],
       providers: [
         { provide: SessionService, useValue: mockSessionService },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        { provide: Router, useValue: routerMock },
         SessionApiService
       ],
       declarations: [FormComponent]
@@ -64,64 +90,56 @@ describe('FormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should init component, user is not admin', () => {
+  it('should init component, user is admin and update', () => {
 
-    // TODO : à faire 
+    sessionApiService = TestBed.inject(SessionApiService);
+    const sessionApiServiceMock = jest.spyOn(sessionApiService, "detail").mockReturnValue(of(session1));
 
-    // router = TestBed.inject(Router);
-    // const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
+    component.ngOnInit();
 
-    // component.ngOnInit();
-
-    // expect(routerMock).toHaveBeenLastCalledWith(['/sessions']);
-
+    expect(component.onUpdate).toEqual(true);
+    expect(sessionApiServiceMock).toHaveBeenCalled();
   });
 
-  it('should init component, user is admin', () => {
+  it('should submit session form for creating a session', () => {
+
+    component.onUpdate = false;
+
+    sessionApiService = TestBed.inject(SessionApiService);
+    const sessionApiServiceMock = jest.spyOn(sessionApiService, "create").mockReturnValue(of(session1));
+
+    matSnackBar = TestBed.inject(MatSnackBar);
+    const matSnackBarMock = jest.spyOn(matSnackBar, "open").mockImplementation();
 
     router = TestBed.inject(Router);
     const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
 
-    component.ngOnInit();
-
-    expect(routerMock).not.toHaveBeenLastCalledWith(['/sessions']);
-  });
-
-
-  it('should submit session form for creating a session', () => {
-
-    // TODO : voir pourquoi .subscribe fonctionne pas 
-    component.onUpdate = false;
-
-    sessionApiService = TestBed.inject(SessionApiService);
-    // const sessionApiServiceMock = jest.spyOn(sessionApiService, "create").mockImplementation(() => new Observable<Session>());
-    const sessionApiServiceMock = jest.spyOn(sessionApiService, "create").mockImplementation(() => of());
-
-    // router = TestBed.inject(Router);
-    // const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
-
-    // let matSnackBar = TestBed.inject(MatSnackBar);
-    // const matSnackBarMock = jest.spyOn(matSnackBar, "open").mockImplementation();
-
     component.submit();
 
     expect(sessionApiServiceMock).toHaveBeenCalled();
-    // expect(matSnackBarMock).toHaveBeenCalled();
-    // expect(routerMock).toHaveBeenCalledWith(['sessions']);
+    expect(matSnackBarMock).toHaveBeenCalled();
+    expect(routerMock).toHaveBeenCalledWith(['sessions']);
 
   });
 
   it('should submit session form for updating a session', () => {
 
-    // TODO : voir compléter quand test précédent fait, pour faire fonctionner .subscribe
     component.onUpdate = true;
 
     sessionApiService = TestBed.inject(SessionApiService);
-    const sessionApiServiceMock = jest.spyOn(sessionApiService, "update").mockImplementation(() => new Observable<Session>());
+    const sessionApiServiceMock = jest.spyOn(sessionApiService, "update").mockReturnValue(of(session1));
+
+    matSnackBar = TestBed.inject(MatSnackBar);
+    const matSnackBarMock = jest.spyOn(matSnackBar, "open").mockImplementation();
+
+    router = TestBed.inject(Router);
+    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
 
     component.submit();
 
     expect(sessionApiServiceMock).toHaveBeenCalled();
+    expect(matSnackBarMock).toHaveBeenCalled();
+    expect(routerMock).toHaveBeenCalledWith(['sessions']);
 
   });
 

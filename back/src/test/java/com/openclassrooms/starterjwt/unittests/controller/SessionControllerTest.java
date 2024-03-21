@@ -49,7 +49,7 @@ class SessionControllerTest {
     User user1;
     User user2;
 
-    SessionDto sessionDto1; 
+    SessionDto sessionDto1;
     SessionDto sessionDto2;
     List<SessionDto> sessionsDto;
 
@@ -58,6 +58,7 @@ class SessionControllerTest {
     void setUp() {
 
         // Users and list of users
+        
         user1 = new User("user1@email.com",
                 "LASTNAME1",
                 "FirstName1",
@@ -119,24 +120,24 @@ class SessionControllerTest {
         List<Long> usersIds = new ArrayList<>();
         usersIds.add(user1.getId());
         usersIds.add(user2.getId());
-       
+
         sessionDto1 = new SessionDto(Long.valueOf(1),
-        "session1",
-        new Date(LocalDate.now().getYear(), LocalDate.now().getMonthValue(),
-                (LocalDate.now().getDayOfMonth() - 1)),
-        teacher1.getId(),
-        "session 1",
-        usersIds,
-        LocalDateTime.now().minusDays(1), LocalDateTime.now().minusDays(1));
+                "session1",
+                new Date(LocalDate.now().getYear(), LocalDate.now().getMonthValue(),
+                        (LocalDate.now().getDayOfMonth() - 1)),
+                teacher1.getId(),
+                "session 1",
+                usersIds,
+                LocalDateTime.now().minusDays(1), LocalDateTime.now().minusDays(1));
 
         sessionDto2 = new SessionDto(Long.valueOf(2),
-        "session2",
-        new Date(LocalDate.now().getYear(), LocalDate.now().getMonthValue(),
-                (LocalDate.now().getDayOfMonth() - 2)),
-        teacher1.getId(),
-        "session 2",
-        usersIds,
-        LocalDateTime.now().minusDays(2), LocalDateTime.now().minusDays(2));
+                "session2",
+                new Date(LocalDate.now().getYear(), LocalDate.now().getMonthValue(),
+                        (LocalDate.now().getDayOfMonth() - 2)),
+                teacher1.getId(),
+                "session 2",
+                usersIds,
+                LocalDateTime.now().minusDays(2), LocalDateTime.now().minusDays(2));
 
         sessionsDto = new ArrayList<>();
         sessionsDto.add(sessionDto1);
@@ -146,11 +147,11 @@ class SessionControllerTest {
     @Test
     void findById_Ok_Test() {
 
-        // GIVEN 
+        // GIVEN
         when(sessionService.getById(anyLong())).thenReturn(session1);
         when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto1);
 
-        // WHEN 
+        // WHEN
         ResponseEntity<?> response = sessionController.findById(String.valueOf(session1.getId()));
 
         // THEN
@@ -161,10 +162,10 @@ class SessionControllerTest {
     @Test
     void findById_UserNotFound_Test() {
 
-        // GIVEN 
+        // GIVEN
         when(sessionService.getById(anyLong())).thenReturn(null);
 
-        // WHEN 
+        // WHEN
         ResponseEntity<?> response = sessionController.findById(String.valueOf(10));
 
         // THEN
@@ -174,10 +175,10 @@ class SessionControllerTest {
     @Test
     void findById_NumberFormatException_Test() {
 
-        // GIVEN 
+        // GIVEN
         when(sessionService.getById(anyLong())).thenThrow(NumberFormatException.class);
 
-        // WHEN 
+        // WHEN
         ResponseEntity<?> response = sessionController.findById(String.valueOf(10));
 
         // THEN
@@ -187,38 +188,38 @@ class SessionControllerTest {
     @Test
     void findAll_Ok_Test() {
 
-        // GIVEN 
+        // GIVEN
         when(sessionService.findAll()).thenReturn(sessions);
         when(sessionMapper.toDto(sessions)).thenReturn(sessionsDto);
 
-        // WHEN 
+        // WHEN
         ResponseEntity<?> response = sessionController.findAll();
 
-        // THEN   
-        assertEquals(HttpStatus.OK, response.getStatusCode());     
+        // THEN
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(sessionsDto, response.getBody());
     }
 
     @Test
     void create_Ok_Test() {
 
-        // GIVEN 
+        // GIVEN
         when(sessionService.create(any(Session.class))).thenReturn(session1);
         when(sessionMapper.toEntity(any(SessionDto.class))).thenReturn(session1);
         when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto1);
 
-        // WHEN 
+        // WHEN
         ResponseEntity<?> response = sessionController.create(sessionDto1);
 
         // THEN
-        assertEquals(HttpStatus.OK, response.getStatusCode());     
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(sessionDto1, response.getBody());
     }
 
     @Test
     void update_Ok_Test() {
 
-        // GIVEN 
+        // GIVEN
         session1.setDescription("session 1 updated");
         sessionDto1.setDescription("session 1 updated");
 
@@ -226,35 +227,35 @@ class SessionControllerTest {
         when(sessionMapper.toEntity(any(SessionDto.class))).thenReturn(session1);
         when(sessionMapper.toDto(any(Session.class))).thenReturn(sessionDto1);
 
-        // WHEN 
+        // WHEN
         ResponseEntity<?> response = sessionController.update(String.valueOf(session1.getId()), sessionDto1);
 
         // THEN
-        assertEquals(HttpStatus.OK, response.getStatusCode());     
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(sessionDto1, response.getBody());
     }
 
     @Test
     void update_NumberFormatException_Test() {
 
-        // GIVEN 
+        // GIVEN
         when(sessionService.update(anyLong(), any(Session.class))).thenThrow(NumberFormatException.class);
         when(sessionMapper.toEntity(any(SessionDto.class))).thenReturn(session1);
-        
-        // WHEN 
+
+        // WHEN
         ResponseEntity<?> response = sessionController.update(String.valueOf(1), sessionDto1);
 
         // THEN
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());     
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
     @Test
     void savedelete_Ok_Test() {
 
-        // GIVEN 
+        // GIVEN
         when(sessionService.getById(anyLong())).thenReturn(session1);
 
-        // WHEN 
+        // WHEN
         ResponseEntity<?> response = sessionController.save(String.valueOf(session1.getId()));
 
         // THEN
@@ -263,11 +264,11 @@ class SessionControllerTest {
 
     @Test
     void savedelete_SessionNotFound_Test() {
-        
-        // GIVEN 
+
+        // GIVEN
         when(sessionService.getById(anyLong())).thenReturn(null);
 
-        // WHEN 
+        // WHEN
         ResponseEntity<?> response = sessionController.save(String.valueOf(10));
 
         // THEN
@@ -276,11 +277,11 @@ class SessionControllerTest {
 
     @Test
     void savedelete_NumberFormatException_Test() {
-        
-        // GIVEN 
+
+        // GIVEN
         when(sessionService.getById(anyLong())).thenThrow(NumberFormatException.class);
 
-        // WHEN 
+        // WHEN
         ResponseEntity<?> response = sessionController.save(String.valueOf(10));
 
         // THEN
@@ -290,9 +291,10 @@ class SessionControllerTest {
     @Test
     void participate_Ok_Test() {
 
-        // GIVEN 
-        // WHEN 
-        ResponseEntity<?> response = sessionController.participate(String.valueOf(session1.getId()), String.valueOf(user1.getId()));
+        // GIVEN
+        // WHEN
+        ResponseEntity<?> response = sessionController.participate(String.valueOf(session1.getId()),
+                String.valueOf(user1.getId()));
 
         // THEN
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -301,11 +303,12 @@ class SessionControllerTest {
     @Test
     void participate_NumberFormatException_Test() {
 
-        // GIVEN 
+        // GIVEN
         doThrow(NumberFormatException.class).when(sessionService).participate(anyLong(), anyLong());
 
-        // WHEN 
-        ResponseEntity<?> response = sessionController.participate(String.valueOf(session1.getId()), String.valueOf(user1.getId()));
+        // WHEN
+        ResponseEntity<?> response = sessionController.participate(String.valueOf(session1.getId()),
+                String.valueOf(user1.getId()));
 
         // THEN
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -314,9 +317,10 @@ class SessionControllerTest {
     @Test
     void noLongerParticipate_Ok_Test() {
 
-        // GIVEN 
-        // WHEN 
-        ResponseEntity<?> response = sessionController.noLongerParticipate(String.valueOf(session1.getId()), String.valueOf(user1.getId()));
+        // GIVEN
+        // WHEN
+        ResponseEntity<?> response = sessionController.noLongerParticipate(String.valueOf(session1.getId()),
+                String.valueOf(user1.getId()));
 
         // THEN
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -325,14 +329,15 @@ class SessionControllerTest {
     @Test
     void noLongerparticipate_NumberFormatException_Test() {
 
-        // GIVEN 
+        // GIVEN
         doThrow(NumberFormatException.class).when(sessionService).noLongerParticipate(anyLong(), anyLong());
 
-        // WHEN 
-        ResponseEntity<?> response = sessionController.noLongerParticipate(String.valueOf(session1.getId()), String.valueOf(user1.getId()));
+        // WHEN
+        ResponseEntity<?> response = sessionController.noLongerParticipate(String.valueOf(session1.getId()),
+                String.valueOf(user1.getId()));
 
         // THEN
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
-    
+
 }

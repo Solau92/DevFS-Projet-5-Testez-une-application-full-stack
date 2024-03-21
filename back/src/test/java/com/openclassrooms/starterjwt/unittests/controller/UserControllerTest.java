@@ -161,7 +161,7 @@ class UserControllerTest {
                 false);
         user2.setId(Long.valueOf(2));
         when(userService.findById(anyLong())).thenReturn(user2);
-        
+
         SecurityContextHolder.setContext(securityContext);
         when(authentication.getPrincipal()).thenReturn(userDetails1);
         when(securityContext.getAuthentication()).thenReturn(authentication);
@@ -179,7 +179,7 @@ class UserControllerTest {
         // GIVEN
         when(userService.findById(anyLong())).thenReturn(user1);
         doThrow(NumberFormatException.class).when(userService).delete(anyLong());
-        
+
         SecurityContextHolder.setContext(securityContext);
         when(authentication.getPrincipal()).thenReturn(userDetails1);
         when(securityContext.getAuthentication()).thenReturn(authentication);

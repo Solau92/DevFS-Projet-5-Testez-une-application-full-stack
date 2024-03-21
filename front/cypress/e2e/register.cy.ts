@@ -21,10 +21,14 @@ describe('Register spec', () => {
       },
       []).as('login')
 
+    // Completion of fields 
+
     cy.get('input[formControlName=firstName]').type("firstName2")
     cy.get('input[formControlName=lastName]').type("lastName1")
     cy.get('input[formControlName=email]').type("user1@test.com")
     cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
+
+    // Verify
 
     cy.url().should('include', '/login')
 
@@ -40,10 +44,14 @@ describe('Register spec', () => {
       },
     })
 
+    // Completion of fields 
+
     cy.get('input[formControlName=firstName]').clear()
     cy.get('input[formControlName=lastName]').clear()
     cy.get('input[formControlName=email]').clear()
     cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
+
+    // Verify
 
     cy.url().should('include', '/register')
     cy.get('button[type="submit"]').should('be.disabled')
@@ -61,10 +69,14 @@ describe('Register spec', () => {
       },
     })
 
+    // Completion of fields 
+
     cy.get('input[formControlName=firstName]').type("firstName2")
     cy.get('input[formControlName=lastName]').type("lastName1")
     cy.get('input[formControlName=email]').type("yoga@studio.com")
     cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
+
+    // Verify
 
     cy.url().should('include', '/register')
     cy.get('.error').should('be.visible')
