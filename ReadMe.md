@@ -1,7 +1,7 @@
 # **ReadMe** 
 
 
-# ** -- Yoga App --** 
+#  -- **Yoga App** --  
 
 An app to book yoga sessions in Savasana studio.</br>
 The front part of the app uses Angular framework to run.
@@ -14,7 +14,7 @@ These instructions will get you a copy of the project up and running on your loc
 First, get [this repository](https://github.com/Solau92/DevFS-Projet-5-Testez-une-application-full-stack.git) and import the project on your computer. 
 
 
-## ** - Back part of the app - **
+##  - **Back part of the app** - 
 
 ### **Prerequisites**
 
@@ -71,7 +71,7 @@ You can also access a summary of the report in the folder : *./coverage-reports*
    **But if it already exists it is beforehand dropped.**
 
 
-## **- Front part of the app - **
+## - **Front part of the app** -
 
 ### Technology
 
@@ -118,6 +118,6 @@ The reports are available in the folder : *./front/coverage/lcov-report* (open *
 You can also access a summary of the report in the folder : *./coverage-reports* (file *cypress-report.html*).
 
 
-## ** - Version - **
+## - **Version** -
 
 1.0.0
