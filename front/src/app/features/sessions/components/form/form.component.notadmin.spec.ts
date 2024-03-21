@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,8 +14,6 @@ import { SessionService } from 'src/app/services/session.service';
 import { SessionApiService } from '../../services/session-api.service';
 
 import { FormComponent } from './form.component';
-import { Session } from '../../interfaces/session.interface';
-import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 describe('FormComponent user is not admin', () => {
@@ -31,16 +29,6 @@ describe('FormComponent user is not admin', () => {
       admin: false
     }
   }
-
-  const session1: Session = {
-    id: 1,
-    name: 'session1',
-    description: 'session 1',
-    date: new Date(),
-    teacher_id: 1,
-    users: [1, 2]
-  }
-
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -84,6 +72,5 @@ describe('FormComponent user is not admin', () => {
     expect(routerMock).toHaveBeenLastCalledWith(['/sessions']);
 
   });
-
 
 });

@@ -9,9 +9,7 @@ describe('SessionService', () => {
     beforeEach(() => {
 
         TestBed.configureTestingModule({
-            imports: [
-                HttpClientModule
-            ]
+            imports: [HttpClientModule]
         });
 
         TestBed.configureTestingModule({});

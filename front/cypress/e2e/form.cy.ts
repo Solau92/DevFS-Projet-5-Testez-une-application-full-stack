@@ -68,7 +68,7 @@ describe('List tests', () => {
 
         cy.contains('Create').click()
 
-        // Verify (affichage form)
+        // Verify (display of form)
 
         cy.contains('Create session')
         cy.get('button[type="submit"]').should('be.disabled')
@@ -83,7 +83,7 @@ describe('List tests', () => {
             .click();
         cy.get('textarea[formControlName="description"]').type("this is a new yoga session")
 
-        // Verify (affichage form)
+        // Verify (display of form)
 
         cy.get('button[type="submit"]').should('not.be.disabled')
 
@@ -135,13 +135,12 @@ describe('List tests', () => {
 
         cy.contains('Save').click()
 
-        // Verify (new session in the list ok sessions) 
+        // Verify (new session in the list of sessions) 
 
         cy.url().should('include', 'sessions')
         cy.contains('this is a new yoga session')
 
     });
-
 
     it('should update a session (admin)', () => {
         
@@ -217,7 +216,7 @@ describe('List tests', () => {
 
         cy.contains('Edit').click()
 
-        // Verify (affichage form)
+        // Verify (display of form)
 
         cy.contains('Update session')
 
@@ -271,4 +270,5 @@ describe('List tests', () => {
         cy.contains('my session 1 updated')
 
     });
+    
 });

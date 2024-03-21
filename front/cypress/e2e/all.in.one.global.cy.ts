@@ -1,3 +1,269 @@
+//// Tests of registration //// 
+
+describe('Register spec', () => {
+
+    it('Register successfull', () => {
+
+        cy.visit('/register')
+
+        cy.intercept('POST', '/api/auth/register', {
+            body: {
+                id: 2,
+                username: 'userName1',
+                firstName: 'firstName1',
+                lastName: 'lastName1',
+                admin: true
+            },
+        })
+
+        cy.intercept(
+            {
+                method: 'GET',
+                url: '/api/login',
+            },
+            []).as('login')
+
+        cy.get('input[formControlName=firstName]').type("firstName2")
+        cy.get('input[formControlName=lastName]').type("lastName1")
+        cy.get('input[formControlName=email]').type("user1@test.com")
+        cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
+
+        cy.url().should('include', '/login')
+
+    });
+
+    it('Error of registration : missing fields', () => {
+
+        cy.visit('/register')
+
+        cy.intercept('POST', '/api/auth/register', {
+            statusCode: 400,
+            body: {
+            },
+        })
+
+        cy.get('input[formControlName=firstName]').clear()
+        cy.get('input[formControlName=lastName]').clear()
+        cy.get('input[formControlName=email]').clear()
+        cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
+
+        cy.url().should('include', '/register')
+        cy.get('button[type="submit"]').should('be.disabled')
+
+    });
+
+    it('Error of registration : email already taker', () => {
+
+        cy.visit('/register')
+
+        cy.intercept('POST', '/api/auth/register', {
+            statusCode: 400,
+            body: {
+                message: "Error: Email is already taken!"
+            },
+        })
+
+        cy.get('input[formControlName=firstName]').type("firstName2")
+        cy.get('input[formControlName=lastName]').type("lastName1")
+        cy.get('input[formControlName=email]').type("yoga@studio.com")
+        cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
+
+        cy.url().should('include', '/register')
+        cy.get('.error').should('be.visible')
+
+    });
+
+});
+
+//// Tests of login and logout //// 
+
+describe('Login tests', () => {
+
+    it('Login successfull', () => {
+
+        cy.visit('/login')
+
+        cy.intercept('POST', '/api/auth/login', {
+            body: {
+                id: 1,
+                username: 'userName',
+                firstName: 'firstName',
+                lastName: 'lastName',
+                admin: true
+            },
+        })
+
+        cy.intercept(
+            {
+                method: 'GET',
+                url: '/api/session',
+            },
+            []).as('session')
+
+        cy.get('input[formControlName=email]').type("yoga@studio.com")
+        cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
+
+        cy.url().should('include', '/sessions')
+
+    });
+
+    it('Login error : bad credentials', () => {
+
+        cy.visit('/login')
+
+        cy.intercept('POST', '/api/auth/login', {
+            statusCode: 401,
+            body: {
+                message: "Bad credentials"
+            },
+        })
+
+        cy.get('input[formControlName=email]').type("wrongEmail@studio.com")
+        cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
+
+        cy.url().should('include', '/login')
+        cy.get('.error').should('be.visible')
+
+    });
+
+    it('Login error : invalid form', () => {
+
+        cy.visit('/login')
+
+        cy.intercept('POST', '/api/auth/login', {
+            statusCode: 400,
+            body: {
+            },
+        })
+
+        cy.get('input[formControlName=email]').clear()
+        cy.get('input[formControlName=password]').clear()
+
+        cy.url().should('include', '/login')
+        cy.get('button[type="submit"]').should('be.disabled')
+
+    });
+
+});
+
+//// Tests of list page //// 
+
+describe('List tests', () => {
+
+    it('should display list of sessions for a user', () => {
+
+        // User login
+
+        cy.visit('/login')
+
+        cy.intercept('POST', '/api/auth/login', {
+            body: {
+                id: 2,
+                username: 'userName2',
+                firstName: 'firstName2',
+                lastName: 'lastName2',
+                admin: false
+            },
+        })
+
+        // Display of sessions 
+
+        const sessions = [{
+            id: 1,
+            name: "session1",
+            date: "2024-04-05T08:00:00.000+00:00",
+            teacher_id: 1,
+            description: "session 1",
+            users: [],
+            createdAt: "2024-03-15T08:23:02",
+            updatedAt: "2024-03-15T08:23:02"
+        },
+        {
+            id: 2,
+            name: "session2",
+            date: "2024-04-05T08:00:00.000+00:00",
+            teacher_id: 1,
+            description: "session 2",
+            users: [],
+            createdAt: "2024-03-15T08:23:02",
+            updatedAt: "2024-03-15T08:23:02"
+        }]
+
+        cy.intercept('GET', '/api/session', {
+            body: sessions
+        })
+
+        cy.get('input[formControlName=email]').type("user1@email.com")
+        cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
+
+        // Verify 
+
+        cy.url().should('include', 'sessions')
+        cy.contains('session2')
+        cy.contains('session1')
+        cy.should('not.contain', 'Create')
+        cy.should('not.contain', 'Edit')
+
+    });
+
+    it('should display list of sessions for an admin', () => {
+
+        // Admin login
+
+        cy.visit('/login')
+
+        cy.intercept('POST', '/api/auth/login', {
+            body: {
+                id: 1,
+                username: 'userName2',
+                firstName: 'firstName2',
+                lastName: 'lastName2',
+                admin: true
+            },
+        })
+
+        // Display of sessions 
+
+        const sessions = [{
+            id: 1,
+            name: "session1",
+            date: "2024-04-05T08:00:00.000+00:00",
+            teacher_id: 1,
+            description: "session 1",
+            users: [],
+            createdAt: "2024-03-15T08:23:02",
+            updatedAt: "2024-03-15T08:23:02"
+        },
+        {
+            id: 2,
+            name: "session2",
+            date: "2024-04-05T08:00:00.000+00:00",
+            teacher_id: 1,
+            description: "session 2",
+            users: [],
+            createdAt: "2024-03-15T08:23:02",
+            updatedAt: "2024-03-15T08:23:02"
+        }]
+
+        cy.intercept('GET', '/api/session', {
+            body: sessions
+        })
+
+        cy.get('input[formControlName=email]').type("yoga@studio.com")
+        cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
+
+        // Verify 
+
+        cy.url().should('include', 'sessions')
+        cy.contains('session2')
+        cy.contains('session1')
+        cy.contains('Create')
+        cy.contains('Edit')
+
+    });
+
+});
+
 //// Tests of detail page //// 
 
 describe('Detail tests', () => {
@@ -162,7 +428,6 @@ describe('Detail tests', () => {
 
 });
 
-
 //// Tests of form page //// 
 
 describe('Form tests', () => {
@@ -235,7 +500,7 @@ describe('Form tests', () => {
 
         cy.contains('Create').click()
 
-        // Verify (affichage form)
+        // Verify (display of form)
 
         cy.contains('Create session')
         cy.get('button[type="submit"]').should('be.disabled')
@@ -250,7 +515,7 @@ describe('Form tests', () => {
             .click();
         cy.get('textarea[formControlName="description"]').type("this is a new yoga session")
 
-        // Verify (affichage form)
+        // Verify (display of form)
 
         cy.get('button[type="submit"]').should('not.be.disabled')
 
@@ -384,7 +649,7 @@ describe('Form tests', () => {
 
         cy.contains('Edit').click()
 
-        // Verify (affichage form)
+        // Verify (display of form)
 
         cy.contains('Update session')
 
@@ -439,230 +704,6 @@ describe('Form tests', () => {
 
     });
 });
-
-
-//// Tests of list page //// 
-
-describe('List tests', () => {
-
-    it('should display list of sessions for a user', () => {
-
-        // User login
-
-        cy.visit('/login')
-
-        cy.intercept('POST', '/api/auth/login', {
-            body: {
-                id: 2,
-                username: 'userName2',
-                firstName: 'firstName2',
-                lastName: 'lastName2',
-                admin: false
-            },
-        })
-
-        // Affichage des sessions 
-
-        const sessions = [{
-            id: 1,
-            name: "session1",
-            date: "2024-04-05T08:00:00.000+00:00",
-            teacher_id: 1,
-            description: "session 1",
-            users: [],
-            createdAt: "2024-03-15T08:23:02",
-            updatedAt: "2024-03-15T08:23:02"
-        },
-        {
-            id: 2,
-            name: "session2",
-            date: "2024-04-05T08:00:00.000+00:00",
-            teacher_id: 1,
-            description: "session 2",
-            users: [],
-            createdAt: "2024-03-15T08:23:02",
-            updatedAt: "2024-03-15T08:23:02"
-        }]
-
-        cy.intercept('GET', '/api/session', {
-            body: sessions
-        })
-
-        cy.get('input[formControlName=email]').type("user1@email.com")
-        cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
-
-        // Verify 
-
-        cy.url().should('include', 'sessions')
-        cy.contains('session2')
-        cy.contains('session1')
-        cy.should('not.contain', 'Create')
-        cy.should('not.contain', 'Edit')
-
-    });
-
-    it('should display list of sessions for an admin', () => {
-
-        // Admin login
-
-        cy.visit('/login')
-
-        cy.intercept('POST', '/api/auth/login', {
-            body: {
-                id: 1,
-                username: 'userName2',
-                firstName: 'firstName2',
-                lastName: 'lastName2',
-                admin: true
-            },
-        })
-
-        // Display of sessions 
-
-        const sessions = [{
-            id: 1,
-            name: "session1",
-            date: "2024-04-05T08:00:00.000+00:00",
-            teacher_id: 1,
-            description: "session 1",
-            users: [],
-            createdAt: "2024-03-15T08:23:02",
-            updatedAt: "2024-03-15T08:23:02"
-        },
-        {
-            id: 2,
-            name: "session2",
-            date: "2024-04-05T08:00:00.000+00:00",
-            teacher_id: 1,
-            description: "session 2",
-            users: [],
-            createdAt: "2024-03-15T08:23:02",
-            updatedAt: "2024-03-15T08:23:02"
-        }]
-
-        cy.intercept('GET', '/api/session', {
-            body: sessions
-        })
-
-        cy.get('input[formControlName=email]').type("yoga@studio.com")
-        cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
-
-        // Verify 
-
-        cy.url().should('include', 'sessions')
-        cy.contains('session2')
-        cy.contains('session1')
-        cy.contains('Create')
-        cy.contains('Edit')
-
-    });
-
-});
-
-
-//// Tests of login and logout //// 
-
-describe('Login and log out tests', () => {
-
-    it('Login successfull', () => {
-
-        cy.visit('/login')
-
-        cy.intercept('POST', '/api/auth/login', {
-            body: {
-                id: 1,
-                username: 'userName',
-                firstName: 'firstName',
-                lastName: 'lastName',
-                admin: true
-            },
-        })
-
-        cy.intercept(
-            {
-                method: 'GET',
-                url: '/api/session',
-            },
-            []).as('session')
-
-        cy.get('input[formControlName=email]').type("yoga@studio.com")
-        cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
-
-        cy.url().should('include', '/sessions')
-
-    });
-
-    it('Login error : bad credentials', () => {
-
-        cy.visit('/login')
-
-        cy.intercept('POST', '/api/auth/login', {
-            statusCode: 401,
-            body: {
-                message: "Bad credentials"
-            },
-        })
-
-        cy.get('input[formControlName=email]').type("wrongEmail@studio.com")
-        cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
-
-        cy.url().should('include', '/login')
-        cy.get('.error').should('be.visible')
-
-    });
-
-    it('Login error : invalid form', () => {
-
-        cy.visit('/login')
-
-        cy.intercept('POST', '/api/auth/login', {
-            statusCode: 400,
-            body: {
-            },
-        })
-
-        cy.get('input[formControlName=email]').clear()
-        cy.get('input[formControlName=password]').clear()
-
-        cy.url().should('include', '/login')
-        cy.get('button[type="submit"]').should('be.disabled')
-
-    });
-
-    it('Login and logout successfully', () => {
-
-        cy.visit('/login')
-
-        cy.intercept('POST', '/api/auth/login', {
-            body: {
-                id: 1,
-                username: 'userName',
-                firstName: 'firstName',
-                lastName: 'lastName',
-                admin: true
-            },
-        })
-
-        cy.intercept(
-            {
-                method: 'GET',
-                url: '/api/session',
-            },
-            []).as('session')
-
-        cy.get('input[formControlName=email]').type("yoga@studio.com")
-        cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
-
-        cy.url().should('include', '/sessions')
-
-        cy.contains('Logout').click();
-
-        cy.url().should('eq', 'http://localhost:4200/');
-
-    });
-
-});
-
 
 //// Tests of me page //// 
 
@@ -772,7 +813,6 @@ describe('Me tests', () => {
         cy.contains('yoga@studio.com')
         cy.contains('You are admin')
 
-        // cy.get('button').should('not.be.visible')
         cy.get('button').not('be.visible')
 
     });
@@ -838,7 +878,6 @@ describe('Me tests', () => {
 
 });
 
-
 //// Tests of not found page //// 
 
 describe('Page not found tests', () => {
@@ -854,18 +893,20 @@ describe('Page not found tests', () => {
 
 });
 
-describe('Register spec', () => {
+//// Tests of logout //// 
 
-    it('Register successfull', () => {
+describe('Log out tests', () => {
 
-        cy.visit('/register')
+    it('Log out successfully', () => {
 
-        cy.intercept('POST', '/api/auth/register', {
+        cy.visit('/login')
+
+        cy.intercept('POST', '/api/auth/login', {
             body: {
-                id: 2,
-                username: 'userName1',
-                firstName: 'firstName1',
-                lastName: 'lastName1',
+                id: 1,
+                username: 'userName',
+                firstName: 'firstName',
+                lastName: 'lastName',
                 admin: true
             },
         })
@@ -873,58 +914,24 @@ describe('Register spec', () => {
         cy.intercept(
             {
                 method: 'GET',
-                url: '/api/login',
+                url: '/api/session',
             },
-            []).as('login')
+            []).as('session')
 
-        cy.get('input[formControlName=firstName]').type("firstName2")
-        cy.get('input[formControlName=lastName]').type("lastName1")
-        cy.get('input[formControlName=email]').type("user1@test.com")
-        cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
-
-        cy.url().should('include', '/login')
-
-    });
-
-    it('Error of registration : missing fields', () => {
-
-        cy.visit('/register')
-
-        cy.intercept('POST', '/api/auth/register', {
-            statusCode: 400,
-            body: {
-            },
-        })
-
-        cy.get('input[formControlName=firstName]').clear()
-        cy.get('input[formControlName=lastName]').clear()
-        cy.get('input[formControlName=email]').clear()
-        cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
-
-        cy.url().should('include', '/register')
-        cy.get('button[type="submit"]').should('be.disabled')
-
-    });
-
-    it('Error of registration : email already taker', () => {
-
-        cy.visit('/register')
-
-        cy.intercept('POST', '/api/auth/register', {
-            statusCode: 400,
-            body: {
-                message: "Error: Email is already taken!"
-            },
-        })
-
-        cy.get('input[formControlName=firstName]').type("firstName2")
-        cy.get('input[formControlName=lastName]').type("lastName1")
         cy.get('input[formControlName=email]').type("yoga@studio.com")
-        cy.get('input[formControlName=password]').type(`${"password"}{enter}{enter}`)
+        cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
 
-        cy.url().should('include', '/register')
-        cy.get('.error').should('be.visible')
+        cy.url().should('include', '/sessions')
+
+        cy.contains('Logout').click();
+
+        cy.url().should('eq', 'http://localhost:4200/');
 
     });
 
 });
+
+
+
+
+

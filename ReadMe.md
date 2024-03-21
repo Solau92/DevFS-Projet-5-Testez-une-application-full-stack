@@ -1,7 +1,7 @@
 # **ReadMe** 
 
 
-# - **Yoga App** 
+# ** -- Yoga App --** 
 
 An app to book yoga sessions in Savasana studio.</br>
 The front part of the app uses Angular framework to run.
@@ -14,7 +14,7 @@ These instructions will get you a copy of the project up and running on your loc
 First, get [this repository](https://github.com/Solau92/DevFS-Projet-5-Testez-une-application-full-stack.git) and import the project on your computer. 
 
 
-## **Back part of the app**
+## ** - Back part of the app - **
 
 ### **Prerequisites**
 
@@ -64,12 +64,14 @@ To test the app, go to the folder that contains the pom.xml file and execute the
 
 The reports are available in the folder : *./back/target/site/jacoco* (open *index.html* file).
 
-   **!! Warning !!**
-   When you run the tests, a database named "itestfs" is created. 
+You can also access a summary of the report in the folder : *./coverage-reports* (file *jacoco-report.html*).
+
+   **!! Warning !!** </br>
+   When you run the tests, a database named "itestfs" is created. </br>
    **But if it already exists it is beforehand dropped.**
 
 
-## **Front part of the app**
+## **- Front part of the app - **
 
 ### Technology
 
@@ -93,25 +95,29 @@ Run the `npm run start` command.
 And navigate to http://localhost:4200. 
 
 NB : if you have run the *script.sql* file, you can use theses credentials to log in : 
-   . user : yoga@studio.com
-   . password : test!1234
+   * user : yoga@studio.com
+   * password : test!1234
 
 ### **Testing the app** 
 
-#### Unitary test
+#### Unitary / integration tests
 
-To launch all the unit tests, run the following command at the root of the front project : `npm run test`.
+To launch all the unit / integration tests, run the following command at the root of the front project : `npm run test`.
 
 The reports are available in the folder : *./front/coverage/jest/lcov-report*  (open *index.html* file).
 
-#### E2E
+You can also access a summary of the report in the folder : *./coverage-reports* (file *jest-report.html*).
 
-To launch all the unit tests, run the following command at the root of the front project : `npm run e2e`.
+#### E2E tests
 
-To generate the coverage report, run the commmand `npm run e2e:coverage`.
+To launch all the tests, run the following command at the root of the front project : `npm run e2e`.
+
+To generate the coverage report, run the commmand `npm run e2e:coverage`. </br>
 The reports are available in the folder : *./front/coverage/lcov-report* (open *index.html* file).
 
+You can also access a summary of the report in the folder : *./coverage-reports* (file *cypress-report.html*).
 
-## - **Version**
+
+## ** - Version - **
 
 1.0.0

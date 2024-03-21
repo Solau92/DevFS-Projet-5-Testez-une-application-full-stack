@@ -8,7 +8,7 @@ import { SessionService } from '../../../../services/session.service';
 
 import { DetailComponent } from './detail.component';
 import { SessionApiService } from '../../services/session-api.service';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Session } from '../../interfaces/session.interface';
 import { Teacher } from 'src/app/interfaces/teacher.interface';
@@ -135,7 +135,7 @@ describe('DetailComponent', () => {
     expect(component.session).toEqual(session1);
     expect(component.teacher).toEqual(teacher1);
 
-  })
+  });
 
 });
 

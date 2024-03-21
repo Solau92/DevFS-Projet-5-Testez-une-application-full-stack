@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -55,7 +55,7 @@ describe('MeComponent', () => {
   it('should go back', () => {
 
     const windowMock = jest.spyOn(window.history, 'back');
-    
+
     component.back();
 
     expect(windowMock).toHaveBeenCalled();
@@ -77,15 +77,15 @@ describe('MeComponent', () => {
 
     userService = TestBed.inject(UserService);
     const userServiceMock = jest.spyOn(userService, "delete").mockReturnValue(of(undefined));
-    
+
     let matSnackBar = TestBed.inject(MatSnackBar);
     const matSnackBarMock = jest.spyOn(matSnackBar, "open").mockImplementation();
 
     let sessionService = TestBed.inject(SessionService);
     const sessionServiceMock = jest.spyOn(sessionService, "logOut").mockImplementation();
-    
+
     router = TestBed.inject(Router);
-    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async ()=> true);
+    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
 
     component.delete();
 
@@ -95,6 +95,5 @@ describe('MeComponent', () => {
     expect(routerMock).toHaveBeenCalledWith(['/']);
 
   });
-
 
 });

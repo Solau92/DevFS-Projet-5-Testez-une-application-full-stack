@@ -24,6 +24,8 @@ describe('Login and log out tests', () => {
     cy.get('input[formControlName=email]').type("yoga@studio.com")
     cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
 
+    // Verify
+
     cy.url().should('include', '/sessions')
 
   });
@@ -42,6 +44,8 @@ describe('Login and log out tests', () => {
     cy.get('input[formControlName=email]').type("wrongEmail@studio.com")
     cy.get('input[formControlName=password]').type(`${"test!1234"}{enter}{enter}`)
 
+    // Verify
+
     cy.url().should('include', '/login')
     cy.get('.error').should('be.visible')
     
@@ -59,6 +63,8 @@ describe('Login and log out tests', () => {
 
     cy.get('input[formControlName=email]').clear()
     cy.get('input[formControlName=password]').clear()
+
+    // Verify
 
     cy.url().should('include', '/login')
     cy.get('button[type="submit"]').should('be.disabled')
@@ -91,8 +97,12 @@ describe('Login and log out tests', () => {
 
     cy.url().should('include', '/sessions')
 
+    // Click on logout 
+
     cy.contains('Logout').click();
 
+    // Verify
+    
     cy.url().should('eq', 'http://localhost:4200/');
 
   });

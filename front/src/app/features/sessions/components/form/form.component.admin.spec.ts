@@ -71,7 +71,7 @@ describe('FormComponent user is admin', () => {
         BrowserAnimationsModule
       ],
       providers: [
-        { provide: SessionService, useValue: mockSessionService }, 
+        { provide: SessionService, useValue: mockSessionService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: Router, useValue: routerMock },
         SessionApiService
@@ -100,7 +100,6 @@ describe('FormComponent user is admin', () => {
     expect(component.onUpdate).toEqual(true);
     expect(sessionApiServiceMock).toHaveBeenCalled();
   });
-
 
   it('should submit session form for creating a session', () => {
 

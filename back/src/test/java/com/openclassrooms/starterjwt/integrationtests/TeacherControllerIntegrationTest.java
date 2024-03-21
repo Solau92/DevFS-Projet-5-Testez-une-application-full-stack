@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @AutoConfigureMockMvc
 @SpringBootTest
 @ActiveProfiles("test")
-@Sql(scripts={"classpath:testdata.sql"})
+@Sql(scripts = { "classpath:testdata.sql" })
 class TeacherControllerIntegrationTest {
 
     @Autowired
@@ -31,10 +31,10 @@ class TeacherControllerIntegrationTest {
     void findById_Ok_IT() throws Exception {
 
         MvcResult result = mockMvc.perform(get("/api/teacher/1")
-        .contentType(MediaType.APPLICATION_JSON))
-        .andDo(print())
-        .andExpect(status().isOk())
-        .andReturn();
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
 
         String resultAsString = result.getResponse().getContentAsString();
         assertTrue(resultAsString.contains("Margot"));
@@ -45,9 +45,9 @@ class TeacherControllerIntegrationTest {
     void findById_TeacherNotFound_IT() throws Exception {
 
         mockMvc.perform(get("/api/teacher/10")
-        .contentType(MediaType.APPLICATION_JSON))
-        .andDo(print())
-        .andExpect(status().isNotFound());
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -55,9 +55,9 @@ class TeacherControllerIntegrationTest {
     void findById_IncorrectIdFormat_IT() throws Exception {
 
         mockMvc.perform(get("/api/teacher/un")
-        .contentType(MediaType.APPLICATION_JSON))
-        .andDo(print())
-        .andExpect(status().isBadRequest());
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -65,17 +65,17 @@ class TeacherControllerIntegrationTest {
     void findAll_Ok_IT() throws Exception {
 
         MvcResult result = mockMvc.perform(get("/api/teacher")
-        .contentType(MediaType.APPLICATION_JSON))
-        .andDo(print())
-        .andExpect(status().isOk())
-        .andReturn();
-        
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
         String resultAsString = result.getResponse().getContentAsString();
         int numberOfTeachers = StringUtils.countOccurrencesOf(resultAsString, "lastName");
-       
+
         assertEquals(2, numberOfTeachers);
         assertTrue(resultAsString.contains("Margot"));
         assertTrue(resultAsString.contains("THIERCELIN"));
     }
-    
+
 }

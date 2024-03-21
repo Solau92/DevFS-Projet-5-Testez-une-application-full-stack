@@ -49,6 +49,7 @@ describe('SessionService', () => {
 
     service.isLogged = true;
     const isLoggedAsObservable: Observable<boolean> = service.$isLogged();
+
     expect(isLoggedAsObservable).toBeTruthy();
 
   });
@@ -57,6 +58,7 @@ describe('SessionService', () => {
 
     service.isLogged = false;
     const isLoggedAsObservable: Observable<boolean> = service.$isLogged();
+    
     expect(isLoggedAsObservable).toBeFalsy;
     
   });

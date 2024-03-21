@@ -26,7 +26,7 @@ describe('RegisterComponent', () => {
       imports: [
         BrowserAnimationsModule,
         HttpClientModule,
-        ReactiveFormsModule,  
+        ReactiveFormsModule,
         MatCardModule,
         MatFormFieldModule,
         MatIconModule,
@@ -45,13 +45,13 @@ describe('RegisterComponent', () => {
   });
 
   it('should register with success', () => {
-    
+
     authService = TestBed.inject(AuthService);
     const authServiceMock = jest.spyOn(authService, "register").mockImplementation(() => of(undefined));
 
     router = TestBed.inject(Router);
-    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async ()=> true);
-    
+    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
+
     component.submit();
 
     expect(authServiceMock).toHaveBeenCalled();
@@ -60,14 +60,14 @@ describe('RegisterComponent', () => {
   });
 
   it('should return error when trying to register', () => {
-    
-      authService = TestBed.inject(AuthService);
-      const authServiceMock = jest.spyOn(authService, "register").mockImplementation(throwError);
-      
-      component.submit();
-  
-      expect(component.onError).toBeTruthy;
-  
-    });
+
+    authService = TestBed.inject(AuthService);
+    const authServiceMock = jest.spyOn(authService, "register").mockImplementation(throwError);
+
+    component.submit();
+
+    expect(component.onError).toBeTruthy;
+
+  });
 
 });

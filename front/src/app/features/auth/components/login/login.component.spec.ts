@@ -17,7 +17,7 @@ import { SessionInformation } from 'src/app/interfaces/sessionInformation.interf
 import { Router } from '@angular/router';
 
 describe('LoginComponent', () => {
-  
+
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
@@ -36,7 +36,7 @@ describe('LoginComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule
-        ]
+      ]
     })
       .compileComponents();
     fixture = TestBed.createComponent(LoginComponent);
@@ -53,7 +53,7 @@ describe('LoginComponent', () => {
     authService = TestBed.inject(AuthService);
     const authServiceMock = jest.spyOn(authService, "login").mockImplementation(() => of({} as SessionInformation));
     router = TestBed.inject(Router);
-    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async ()=> true);
+    const routerMock = jest.spyOn(router, "navigate").mockImplementation(async () => true);
     const sessionServiceMock = jest.spyOn(TestBed.inject(SessionService), "logIn").mockImplementation();
 
     component.submit();
@@ -64,12 +64,11 @@ describe('LoginComponent', () => {
 
   });
 
-
   it('should login with error', () => {
 
     authService = TestBed.inject(AuthService);
     const authServiceMock = jest.spyOn(authService, "login").mockImplementation(throwError);
-    
+
     component.submit();
 
     expect(component.onError).toBeTruthy;

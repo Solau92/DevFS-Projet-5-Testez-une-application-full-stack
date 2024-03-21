@@ -12,7 +12,7 @@ describe('Me tests', () => {
                 username: 'userName2',
                 firstName: 'firstName2',
                 lastName: 'lastName2',
-                admin: true
+                admin: false
             },
         })
 
@@ -100,11 +100,8 @@ describe('Me tests', () => {
         // Verify 
 
         cy.url().should('include', '/me')
-
         cy.contains('yoga@studio.com')
         cy.contains('You are admin')
-
-        // cy.get('button').should('not.be.visible')
         cy.get('button').not('be.visible')
 
     });
@@ -163,7 +160,6 @@ describe('Me tests', () => {
          // Verify 
 
          cy.url().should('include', '/')
-
          cy.contains('Login')
  
     });
