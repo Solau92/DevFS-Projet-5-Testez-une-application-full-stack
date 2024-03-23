@@ -60,7 +60,11 @@ To run the app, go to the folder that contains the pom.xml file (*./back*) and e
 
 ### **Testing the app** 
 
-To test the app, go to the folder that contains the pom.xml file and execute the following command : `mvn clean test`
+Before launching the tests, in the file : *application-test.properties* (which is in the directory *back/src/main//resources*), you must fill the following fields corresponding to your local MySQL database for tests :
+* spring.datasource.username=
+* spring.datasource.password=
+
+To launch the tests, go to the folder that contains the pom.xml file and execute the following command : `mvn clean test`
 
 The reports are available in the folder : *./back/target/site/jacoco* (open *index.html* file).
 
